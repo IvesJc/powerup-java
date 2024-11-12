@@ -13,7 +13,7 @@ public class SwaggerConfig {
     public OpenAPI customOpenAPI(){
         return new OpenAPI().
                 info(new Info().
-                        title("PowerUp").
+                        title("PowerUp - Java & Spring Boot 3").
                         version("v1").
                         description("Ellie de Oliveira\n" +
                                 "\n" +
