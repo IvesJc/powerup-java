@@ -1,4 +1,6 @@
 <h1>🎯 PowerUp</h1>  
+<img src=https://github.com/user-attachments/assets/d1e958e4-0074-41bf-86ec-8a851611c591>
+
 <p>👥 Integrantes:  </p>
 <p>Ellie de Oliveira  </p>
 <p>RM: 552824  </p>
@@ -31,7 +33,7 @@
 <p>A arquitetura se tornou complexa com o avanço do projeto. Mas basicamente o Beneficiário é o centro do sistema, e a partir dele(a) é possível entender que o mesmo pode ter Endereço, Plano Odontológico, Missões dentro do App.</p>  
 
 <h3>Swagger</h3>
-<img src="https://github.com/user-attachments/assets/7646bc6a-ccd5-4f86-9f6a-0399aee766fa">
+<!-- <img src="https://github.com/user-attachments/assets/7646bc6a-ccd5-4f86-9f6a-0399aee766fa"> -->
 <p>Já dentro do Swagger será possível acessar a todas as Entidades e seus devidos endpoints</p>
 <ul>
 
