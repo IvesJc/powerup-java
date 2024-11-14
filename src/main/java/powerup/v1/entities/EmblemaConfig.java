@@ -22,4 +22,9 @@ public class EmblemaConfig {
     @ManyToOne
     @JoinColumn(name = "emblema_tipo_id")
     private EmblemaTipo emblemaTipo;
+
+    @ManyToOne
+    @JoinColumn(name = "quiz_id")
+    private Long quizId;
+
 }

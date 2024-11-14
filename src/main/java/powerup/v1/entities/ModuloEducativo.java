@@ -29,10 +29,5 @@ public class ModuloEducativo {
 
     private Integer nivel;
 
-    @ManyToMany
-    @JoinTable(
-            name = "modulo_artigo",
-            joinColumns = @JoinColumn(name = "modulo_educativo_id"),
-            inverseJoinColumns = @JoinColumn(name = "artigo_id"))
-    private List<Artigo> artigos;
+
 }

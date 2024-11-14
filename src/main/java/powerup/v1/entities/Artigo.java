@@ -33,4 +33,6 @@ public class Artigo {
             joinColumns = @JoinColumn(name = "artigo_id"),
             inverseJoinColumns = @JoinColumn(name = "missao_id"))
     private List<Missao> missoes;
+
+    private Long moduloEducativoId;
 }

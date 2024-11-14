@@ -21,10 +21,6 @@ public class Quiz {
     private String descricao;
     private String categoria;
 
-    @ManyToOne
-    @JoinColumn(name = "emblema_config_id")
-    private EmblemaConfig emblemaConfig;
-
     private Integer notaMinima;
 
     @ManyToOne
