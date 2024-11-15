@@ -25,8 +25,8 @@ public class Alternativa {
 
     // TODO: REVIEW
     @NotNull
-    @Column(name = "e_correta", length = 1)
-    private Integer eCorreta;
+    @Column(name = "e_correta")
+    private Boolean eCorreta;
 
     @ManyToOne
     @JoinColumn(name = "pergunta_id")
