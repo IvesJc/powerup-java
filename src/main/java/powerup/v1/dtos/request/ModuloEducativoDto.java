@@ -9,6 +9,6 @@ public record ModuloEducativoDto(
         String subtitulo,
         String descricao,
         Integer nivel,
-        LinkDto thumbLink
+        Integer thumbLink
 ) {
 }

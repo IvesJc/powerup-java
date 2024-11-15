@@ -8,6 +8,6 @@ public record UsuarioDto(
         String firebaseUid,
         String email,
         String nome,
-        RankingDto ranking
+        Integer ranking
 ) {
 }

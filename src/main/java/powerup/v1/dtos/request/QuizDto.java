@@ -1,6 +1,7 @@
 package powerup.v1.dtos.request;
 
 import lombok.Builder;
+import lombok.Data;
 
 @Builder
 public record QuizDto(
@@ -8,7 +9,7 @@ public record QuizDto(
         String nome,
         String descricao,
         String categoria,
-        Integer notaMinima,
-        ModuloEducativoDto moduloEducativo
+        Double notaMinima,
+        Integer moduloEducativo
 ) {
 }

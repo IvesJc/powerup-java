@@ -5,7 +5,7 @@ import lombok.Builder;
 @Builder
 public record EmblemaDto(
         Integer id,
-        UsuarioDto usuario,
-        EmblemaConfigDto emblemaConfig
+        Integer usuario,
+        Integer emblemaConfig
 ) {
 }

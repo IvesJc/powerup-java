@@ -7,7 +7,7 @@ public record EmblemaConfigDto(
         Integer id,
         String nome,
         String descricao,
-        EmblemaTipoDto emblemaTipo,
-        QuizDto quiz
+        Integer emblemaTipo,
+        Integer quiz
 ) {
 }

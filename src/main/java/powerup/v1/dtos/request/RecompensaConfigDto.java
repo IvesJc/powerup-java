@@ -7,6 +7,6 @@ public record RecompensaConfigDto(
         Integer id,
         String nome,
         Integer custoPontos,
-        RecompensaTipoDto recompensaTipo
+        Integer recompensaTipo
 ) {
 }

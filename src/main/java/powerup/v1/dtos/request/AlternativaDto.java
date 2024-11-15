@@ -8,6 +8,6 @@ public record AlternativaDto(
         String descricao,
         // TODO: REVIEW
         Integer eCorreta,
-        PerguntaDto pergunta
+        Integer pergunta
 ) {
 }

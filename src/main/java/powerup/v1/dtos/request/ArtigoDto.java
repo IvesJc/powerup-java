@@ -8,7 +8,7 @@ public record ArtigoDto(
         String titulo,
         String subtitulo,
         String conteudo,
-        LinkDto thumbLink,
-        ModuloEducativoDto moduloEducativo
+        Integer thumbLink,
+        Integer moduloEducativo
 ) {
 }

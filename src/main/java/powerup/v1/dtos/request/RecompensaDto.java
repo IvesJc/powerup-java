@@ -6,7 +6,7 @@ import lombok.Builder;
 public record RecompensaDto(
         Integer id,
         Integer pontosUtilizados,
-        UsuarioDto usuario,
-        RecompensaConfigDto recompensaConfig
+        Integer usuario,
+        Integer recompensaConfig
 ) {
 }

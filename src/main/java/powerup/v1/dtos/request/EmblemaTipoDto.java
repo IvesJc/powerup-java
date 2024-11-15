@@ -6,6 +6,6 @@ import lombok.Builder;
 public record EmblemaTipoDto(
         Integer id,
         String nome,
-        LinkDto imageLink
+        Integer imageLink
 ) {
 }

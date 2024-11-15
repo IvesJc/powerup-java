@@ -7,6 +7,6 @@ public record PerguntaDto(
         Integer id,
         String titulo,
         String conteudo,
-        QuizDto quiz
+        Integer quiz
 ) {
 }
