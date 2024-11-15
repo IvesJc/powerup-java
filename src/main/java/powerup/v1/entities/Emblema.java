@@ -11,16 +11,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table(name = "emblema")
 public class Emblema {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "usuario_id")
-    private Usuario usuario;
+    @JoinColumn(name = "usuario_id", nullable = false)
+    private Usuario usuarioId;
 
     @ManyToOne
-    @JoinColumn(name = "emblema_config_id")
-    private EmblemaConfig emblemaConfig;
+    @JoinColumn(name = "emblema_config_id", nullable = false)
+    private EmblemaConfig emblemaConfigId;
 }

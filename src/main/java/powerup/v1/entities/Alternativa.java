@@ -1,6 +1,8 @@
 package powerup.v1.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,14 +13,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table(name = "alternativa")
 public class Alternativa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
+    @NotNull
     private String descricao;
-    private Boolean eCorreta;
+
+    // TODO: REVIEW
+    @NotNull
+    @Column(name = "e_correta", length = 1)
+    private Integer eCorreta;
 
     @ManyToOne
     @JoinColumn(name = "pergunta_id")

@@ -1,6 +1,7 @@
 package powerup.v1.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,26 +14,28 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table(name = "artigo")
 public class Artigo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
+    @NotNull
     private String titulo;
+
+    @NotNull
     private String subtitulo;
+
+    @NotNull
     private String conteudo;
 
     @ManyToOne
-    @JoinColumn(name = "thumb_link_id")
+    @JoinColumn(name = "thumb_link_id", nullable = false)
     private Link thumbLink;
 
-    @ManyToMany
-    @JoinTable(
-            name = "artigo_missao",
-            joinColumns = @JoinColumn(name = "artigo_id"),
-            inverseJoinColumns = @JoinColumn(name = "missao_id"))
-    private List<Missao> missoes;
-
-    private Long moduloEducativoId;
+    // TODO: REVIEW RELACAO
+    @ManyToOne
+    @JoinColumn(name = "MODULO_EDUCATIVO_ID", nullable = false)
+    private ModuloEducativo moduloEducativoId;
 }

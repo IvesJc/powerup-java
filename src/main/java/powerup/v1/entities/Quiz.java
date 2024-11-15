@@ -1,6 +1,7 @@
 package powerup.v1.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,19 +12,27 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table(name = "quiz")
 public class Quiz {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
+    @NotNull
     private String nome;
+
+    @NotNull
     private String descricao;
+
+    @NotNull
     private String categoria;
 
-    private Integer notaMinima;
+    @NotNull
+    @Column(name = "nota_minima")
+    private Double notaMinima;
 
     @ManyToOne
-    @JoinColumn(name = "modulo_educativo_id")
+    @JoinColumn(name = "modulo_educativo_id", nullable = false)
     private ModuloEducativo moduloEducativo;
 }

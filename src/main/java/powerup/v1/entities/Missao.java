@@ -1,6 +1,7 @@
 package powerup.v1.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,33 +14,25 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table(name = "missao")
 public class Missao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
+    @NotNull
+    @Column(name = "recompensa_pontos")
     private Integer recompensaPontos;
+
+    @NotNull
     private String status;
 
     @ManyToOne
-    @JoinColumn(name = "missao_config_id")
+    @JoinColumn(name = "missao_config_id", nullable = false)
     private MissaoConfig missaoConfig;
 
     @ManyToOne
-    @JoinColumn(name = "usuario_id")
+    @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
 
-    @ManyToMany
-    @JoinTable(
-            name = "missao_artigo",
-            joinColumns = @JoinColumn(name = "missao_id"),
-            inverseJoinColumns = @JoinColumn(name = "artigo_id"))
-    private List<Artigo> artigos;
-
-    @ManyToMany
-    @JoinTable(
-            name = "missao_modulo",
-            joinColumns = @JoinColumn(name = "missao_id"),
-            inverseJoinColumns = @JoinColumn(name = "modulo_educativo_id"))
-    private List<ModuloEducativo> modulosEducativos;
 }
