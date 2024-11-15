@@ -7,7 +7,7 @@ public record AlternativaDto(
         Integer id,
         String descricao,
         // TODO: REVIEW
-        Integer eCorreta,
+        Boolean eCorreta,
         Integer pergunta
 ) {
 }
