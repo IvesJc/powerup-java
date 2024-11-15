@@ -28,6 +28,6 @@ public class SwaggerConfig {
                                 "RM: 553233").
                         license(new License().
                                 name("PowerUp").
-                                url("https://www.fiap.com.br/")));
+                                url("https://d2a9bkgsuxmqe2.cloudfront.net/staging/podcast_uploaded_episode400/38728078/38728078-1697034829510-b33bc02914df7.jpg")));
     }
 }

@@ -1,12 +1,12 @@
 package powerup.v1.usecases.impl;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import powerup.v1.dtos.request.MissaoDto;
 import powerup.v1.entities.Missao;
 import powerup.v1.repositories.MissaoRepository;
 import powerup.v1.usecases.MissaoService;
+import powerup.v1.usecases.exception.IdNotFoundException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,13 +34,13 @@ public class MissaoServiceImpl implements MissaoService {
     public MissaoDto getById(Integer id) {
         return missaoRepository.findById(id)
                 .map(this::mapToDTO)
-                .orElseThrow(() -> new EntityNotFoundException("Missao not found with id: " + id));
+                .orElseThrow(() -> new IdNotFoundException("Missao not found with id: " + id));
     }
 
     @Override
     public MissaoDto update(Integer id, Missao missao) {
         if (!missaoRepository.existsById(id)) {
-            throw new EntityNotFoundException("Missao not found with id: " + id);
+            throw new IdNotFoundException("Missao not found with id: " + id);
         }
         missao.setId(id);
         Missao updatedEntity = missaoRepository.save(missao);
@@ -50,7 +50,7 @@ public class MissaoServiceImpl implements MissaoService {
     @Override
     public void delete(Integer id) {
         if (!missaoRepository.existsById(id)) {
-            throw new EntityNotFoundException("Missao not found with id: " + id);
+            throw new IdNotFoundException("Missao not found with id: " + id);
         }
         missaoRepository.deleteById(id);
     }

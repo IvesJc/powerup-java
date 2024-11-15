@@ -1,12 +1,12 @@
 package powerup.v1.usecases.impl;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import powerup.v1.dtos.request.PermissaoDto;
 import powerup.v1.entities.Permissao;
 import powerup.v1.repositories.PermissaoRepository;
 import powerup.v1.usecases.PermissaoService;
+import powerup.v1.usecases.exception.IdNotFoundException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,13 +34,13 @@ public class PermissaoServiceImpl implements PermissaoService {
     public PermissaoDto getById(Integer id) {
         return permissaoRepository.findById(id)
                 .map(this::mapToDTO)
-                .orElseThrow(() -> new EntityNotFoundException("Permissao not found with id: " + id));
+                .orElseThrow(() -> new IdNotFoundException("Permissao not found with id: " + id));
     }
 
     @Override
     public PermissaoDto update(Integer id, Permissao permissao) {
         if (!permissaoRepository.existsById(id)) {
-            throw new EntityNotFoundException("Permissao not found with id: " + id);
+            throw new IdNotFoundException("Permissao not found with id: " + id);
         }
         permissao.setId(id);
         Permissao updatedEntity = permissaoRepository.save(permissao);
@@ -50,7 +50,7 @@ public class PermissaoServiceImpl implements PermissaoService {
     @Override
     public void delete(Integer id) {
         if (!permissaoRepository.existsById(id)) {
-            throw new EntityNotFoundException("Permissao not found with id: " + id);
+            throw new IdNotFoundException("Permissao not found with id: " + id);
         }
         permissaoRepository.deleteById(id);
     }

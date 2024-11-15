@@ -1,16 +1,12 @@
 package powerup.v1.usecases.impl;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import powerup.v1.dtos.request.LinkDto;
 import powerup.v1.dtos.request.ModuloEducativoDto;
-import powerup.v1.entities.Link;
 import powerup.v1.entities.ModuloEducativo;
-import powerup.v1.repositories.LinkRepository;
 import powerup.v1.repositories.ModuloEducativoRepository;
-import powerup.v1.usecases.LinkService;
 import powerup.v1.usecases.ModuloEducativoService;
+import powerup.v1.usecases.exception.IdNotFoundException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,13 +35,13 @@ public class ModuloEducativoServiceImpl implements ModuloEducativoService {
     public ModuloEducativoDto getById(Integer id) {
         return moduloEducativoRepository.findById(id)
                 .map(this::mapToDTO)
-                .orElseThrow(() -> new EntityNotFoundException("ModuloEducativo not found with id: " + id));
+                .orElseThrow(() -> new IdNotFoundException("ModuloEducativo not found with id: " + id));
     }
 
     @Override
     public ModuloEducativoDto update(Integer id, ModuloEducativo moduloEducativo) {
         if (!moduloEducativoRepository.existsById(id)) {
-            throw new EntityNotFoundException("ModuloEducativo not found with id: " + id);
+            throw new IdNotFoundException("ModuloEducativo not found with id: " + id);
         }
         moduloEducativo.setId(id);
         ModuloEducativo updatedEntity = moduloEducativoRepository.save(moduloEducativo);
@@ -55,7 +51,7 @@ public class ModuloEducativoServiceImpl implements ModuloEducativoService {
     @Override
     public void delete(Integer id) {
         if (!moduloEducativoRepository.existsById(id)) {
-            throw new EntityNotFoundException("ModuloEducativo not found with id: " + id);
+            throw new IdNotFoundException("ModuloEducativo not found with id: " + id);
         }
         moduloEducativoRepository.deleteById(id);
     }

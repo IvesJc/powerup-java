@@ -1,16 +1,12 @@
 package powerup.v1.usecases.impl;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import powerup.v1.dtos.request.LinkDto;
 import powerup.v1.dtos.request.RecompensaTipoDto;
-import powerup.v1.entities.Link;
 import powerup.v1.entities.RecompensaTipo;
-import powerup.v1.repositories.LinkRepository;
 import powerup.v1.repositories.RecompensaTipoRepository;
-import powerup.v1.usecases.LinkService;
 import powerup.v1.usecases.RecompensaTipoService;
+import powerup.v1.usecases.exception.IdNotFoundException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,13 +35,13 @@ public class RecompensaTipoServiceImpl implements RecompensaTipoService {
     public RecompensaTipoDto getById(Integer id) {
         return recompensaTipoRepository.findById(id)
                 .map(this::mapToDTO)
-                .orElseThrow(() -> new EntityNotFoundException("RecompensaTipo not found with id: " + id));
+                .orElseThrow(() -> new IdNotFoundException("RecompensaTipo not found with id: " + id));
     }
 
     @Override
     public RecompensaTipoDto update(Integer id, RecompensaTipo recompensaTipo) {
         if (!recompensaTipoRepository.existsById(id)) {
-            throw new EntityNotFoundException("RecompensaTipo not found with id: " + id);
+            throw new IdNotFoundException("RecompensaTipo not found with id: " + id);
         }
         recompensaTipo.setId(id);
         RecompensaTipo updatedEntity = recompensaTipoRepository.save(recompensaTipo);
@@ -55,7 +51,7 @@ public class RecompensaTipoServiceImpl implements RecompensaTipoService {
     @Override
     public void delete(Integer id) {
         if (!recompensaTipoRepository.existsById(id)) {
-            throw new EntityNotFoundException("RecompensaTipo not found with id: " + id);
+            throw new IdNotFoundException("RecompensaTipo not found with id: " + id);
         }
         recompensaTipoRepository.deleteById(id);
     }

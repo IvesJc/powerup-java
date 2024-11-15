@@ -1,12 +1,12 @@
 package powerup.v1.usecases.impl;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import powerup.v1.dtos.request.PerguntaDto;
 import powerup.v1.entities.Pergunta;
 import powerup.v1.repositories.PerguntaRepository;
 import powerup.v1.usecases.PerguntaService;
+import powerup.v1.usecases.exception.IdNotFoundException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,13 +34,13 @@ public class PerguntaServiceImpl implements PerguntaService {
     public PerguntaDto getById(Integer id) {
         return perguntaRepository.findById(id)
                 .map(this::mapToDTO)
-                .orElseThrow(() -> new EntityNotFoundException("Pergunta not found with id: " + id));
+                .orElseThrow(() -> new IdNotFoundException("Pergunta not found with id: " + id));
     }
 
     @Override
     public PerguntaDto update(Integer id, Pergunta pergunta) {
         if (!perguntaRepository.existsById(id)) {
-            throw new EntityNotFoundException("Pergunta not found with id: " + id);
+            throw new IdNotFoundException("Pergunta not found with id: " + id);
         }
         pergunta.setId(id);
         Pergunta updatedEntity = perguntaRepository.save(pergunta);
@@ -50,7 +50,7 @@ public class PerguntaServiceImpl implements PerguntaService {
     @Override
     public void delete(Integer id) {
         if (!perguntaRepository.existsById(id)) {
-            throw new EntityNotFoundException("Pergunta not found with id: " + id);
+            throw new IdNotFoundException("Pergunta not found with id: " + id);
         }
         perguntaRepository.deleteById(id);
     }

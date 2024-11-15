@@ -1,12 +1,12 @@
 package powerup.v1.usecases.impl;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import powerup.v1.dtos.request.MissaoConfigDto;
 import powerup.v1.entities.MissaoConfig;
 import powerup.v1.repositories.MissaoConfigRepository;
 import powerup.v1.usecases.MissaoConfigService;
+import powerup.v1.usecases.exception.IdNotFoundException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,13 +35,13 @@ public class MissaoConfigServiceImpl implements MissaoConfigService {
     public MissaoConfigDto getById(Integer id) {
         return missaoConfigRepository.findById(id)
                 .map(this::mapToDTO)
-                .orElseThrow(() -> new EntityNotFoundException("MissaoConfig not found with id: " + id));
+                .orElseThrow(() -> new IdNotFoundException("MissaoConfig not found with id: " + id));
     }
 
     @Override
     public MissaoConfigDto update(Integer id, MissaoConfig missaoConfig) {
         if (!missaoConfigRepository.existsById(id)) {
-            throw new EntityNotFoundException("MissaoConfig not found with id: " + id);
+            throw new IdNotFoundException("MissaoConfig not found with id: " + id);
         }
         missaoConfig.setId(id);
         MissaoConfig updatedEntity = missaoConfigRepository.save(missaoConfig);
@@ -51,7 +51,7 @@ public class MissaoConfigServiceImpl implements MissaoConfigService {
     @Override
     public void delete(Integer id) {
         if (!missaoConfigRepository.existsById(id)) {
-            throw new EntityNotFoundException("MissaoConfig not found with id: " + id);
+            throw new IdNotFoundException("MissaoConfig not found with id: " + id);
         }
         missaoConfigRepository.deleteById(id);
     }

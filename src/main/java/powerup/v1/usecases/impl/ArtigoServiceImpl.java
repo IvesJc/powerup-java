@@ -1,12 +1,12 @@
 package powerup.v1.usecases.impl;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import powerup.v1.dtos.request.ArtigoDto;
 import powerup.v1.entities.Artigo;
 import powerup.v1.repositories.ArtigoRepository;
 import powerup.v1.usecases.ArtigoService;
+import powerup.v1.usecases.exception.IdNotFoundException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,13 +34,13 @@ public class ArtigoServiceImpl implements ArtigoService {
     public ArtigoDto getById(Integer id) {
         return artigoRepository.findById(id)
                 .map(this::mapToDTO)
-                .orElseThrow(() -> new EntityNotFoundException("Artigo not found with id: " + id));
+                .orElseThrow(() -> new IdNotFoundException("Artigo not found with id: " + id));
     }
 
     @Override
     public ArtigoDto update(Integer id, Artigo artigo) {
         if (!artigoRepository.existsById(id)) {
-            throw new EntityNotFoundException("Artigo not found with id: " + id);
+            throw new IdNotFoundException("Artigo not found with id: " + id);
         }
         artigo.setId(id);
         Artigo updatedEntity = artigoRepository.save(artigo);
@@ -50,7 +50,7 @@ public class ArtigoServiceImpl implements ArtigoService {
     @Override
     public void delete(Integer id) {
         if (!artigoRepository.existsById(id)) {
-            throw new EntityNotFoundException("Artigo not found with id: " + id);
+            throw new IdNotFoundException("Artigo not found with id: " + id);
         }
         artigoRepository.deleteById(id);
     }

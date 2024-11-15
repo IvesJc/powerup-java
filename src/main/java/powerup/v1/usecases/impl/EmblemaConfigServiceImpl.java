@@ -1,12 +1,12 @@
 package powerup.v1.usecases.impl;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import powerup.v1.dtos.request.EmblemaConfigDto;
 import powerup.v1.entities.EmblemaConfig;
 import powerup.v1.repositories.EmblemaConfigRepository;
 import powerup.v1.usecases.EmblemaConfigService;
+import powerup.v1.usecases.exception.IdNotFoundException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,13 +34,13 @@ public class EmblemaConfigServiceImpl implements EmblemaConfigService {
     public EmblemaConfigDto getById(Integer id) {
         return emblemaConfigRepository.findById(id)
                 .map(this::mapToDTO)
-                .orElseThrow(() -> new EntityNotFoundException("EmblemaConfig not found with id: " + id));
+                .orElseThrow(() -> new IdNotFoundException("EmblemaConfig not found with id: " + id));
     }
 
     @Override
     public EmblemaConfigDto update(Integer id, EmblemaConfig emblemaConfig) {
         if (!emblemaConfigRepository.existsById(id)) {
-            throw new EntityNotFoundException("EmblemaConfig not found with id: " + id);
+            throw new IdNotFoundException("EmblemaConfig not found with id: " + id);
         }
         emblemaConfig.setId(id);
         EmblemaConfig updatedEntity = emblemaConfigRepository.save(emblemaConfig);
@@ -50,7 +50,7 @@ public class EmblemaConfigServiceImpl implements EmblemaConfigService {
     @Override
     public void delete(Integer id) {
         if (!emblemaConfigRepository.existsById(id)) {
-            throw new EntityNotFoundException("EmblemaConfig not found with id: " + id);
+            throw new IdNotFoundException("EmblemaConfig not found with id: " + id);
         }
         emblemaConfigRepository.deleteById(id);
     }

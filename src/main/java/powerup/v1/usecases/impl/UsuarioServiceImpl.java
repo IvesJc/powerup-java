@@ -1,12 +1,12 @@
 package powerup.v1.usecases.impl;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import powerup.v1.dtos.request.UsuarioDto;
 import powerup.v1.entities.Usuario;
 import powerup.v1.repositories.UsuarioRepository;
 import powerup.v1.usecases.UsuarioService;
+import powerup.v1.usecases.exception.IdNotFoundException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,13 +34,13 @@ public class UsuarioServiceImpl implements UsuarioService {
     public UsuarioDto getById(Integer id) {
         return usuarioRepository.findById(id)
                 .map(this::mapToDTO)
-                .orElseThrow(() -> new EntityNotFoundException("Usuario not found with id: " + id));
+                .orElseThrow(() -> new IdNotFoundException("Usuario not found with id: " + id));
     }
 
     @Override
     public UsuarioDto update(Integer id, Usuario usuario) {
         if (!usuarioRepository.existsById(id)) {
-            throw new EntityNotFoundException("Usuario not found with id: " + id);
+            throw new IdNotFoundException("Usuario not found with id: " + id);
         }
         usuario.setId(id);
         Usuario updatedEntity = usuarioRepository.save(usuario);
@@ -50,7 +50,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public void delete(Integer id) {
         if (!usuarioRepository.existsById(id)) {
-            throw new EntityNotFoundException("Usuario not found with id: " + id);
+            throw new IdNotFoundException("Usuario not found with id: " + id);
         }
         usuarioRepository.deleteById(id);
     }

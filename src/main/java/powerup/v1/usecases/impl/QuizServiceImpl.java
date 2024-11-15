@@ -1,12 +1,12 @@
 package powerup.v1.usecases.impl;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import powerup.v1.dtos.request.QuizDto;
 import powerup.v1.entities.Quiz;
 import powerup.v1.repositories.QuizRepository;
 import powerup.v1.usecases.QuizService;
+import powerup.v1.usecases.exception.IdNotFoundException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,13 +34,13 @@ public class QuizServiceImpl implements QuizService {
     public QuizDto getById(Integer id) {
         return quizRepository.findById(id)
                 .map(this::mapToDTO)
-                .orElseThrow(() -> new EntityNotFoundException("Quiz not found with id: " + id));
+                .orElseThrow(() -> new IdNotFoundException("Quiz not found with id: " + id));
     }
 
     @Override
     public QuizDto update(Integer id, Quiz quiz) {
         if (!quizRepository.existsById(id)) {
-            throw new EntityNotFoundException("Quiz not found with id: " + id);
+            throw new IdNotFoundException("Quiz not found with id: " + id);
         }
         quiz.setId(id);
         Quiz updatedEntity = quizRepository.save(quiz);
@@ -50,7 +50,7 @@ public class QuizServiceImpl implements QuizService {
     @Override
     public void delete(Integer id) {
         if (!quizRepository.existsById(id)) {
-            throw new EntityNotFoundException("Quiz not found with id: " + id);
+            throw new IdNotFoundException("Quiz not found with id: " + id);
         }
         quizRepository.deleteById(id);
     }

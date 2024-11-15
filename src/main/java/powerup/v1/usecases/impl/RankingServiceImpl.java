@@ -1,13 +1,12 @@
 package powerup.v1.usecases.impl;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import powerup.v1.dtos.request.RankingDto;
 import powerup.v1.entities.Ranking;
 import powerup.v1.repositories.RankingRepository;
 import powerup.v1.usecases.RankingService;
+import powerup.v1.usecases.exception.IdNotFoundException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,13 +36,13 @@ public class RankingServiceImpl implements RankingService {
     public RankingDto getById(Integer id) {
         return rankingRepository.findById(id)
                 .map(this::mapToDTO)
-                .orElseThrow(() -> new EntityNotFoundException("Ranking not found with id: " + id));
+                .orElseThrow(() -> new IdNotFoundException("Ranking not found with id: " + id));
     }
 
     @Override
     public RankingDto update(Integer id, Ranking ranking) {
         if (!rankingRepository.existsById(id)) {
-            throw new EntityNotFoundException("Ranking not found with id: " + id);
+            throw new IdNotFoundException("Ranking not found with id: " + id);
         }
         ranking.setId(id);
         Ranking updatedEntity = rankingRepository.save(ranking);
@@ -53,7 +52,7 @@ public class RankingServiceImpl implements RankingService {
     @Override
     public void delete(Integer id) {
         if (!rankingRepository.existsById(id)) {
-            throw new EntityNotFoundException("Ranking not found with id: " + id);
+            throw new IdNotFoundException("Ranking not found with id: " + id);
         }
         rankingRepository.deleteById(id);
     }

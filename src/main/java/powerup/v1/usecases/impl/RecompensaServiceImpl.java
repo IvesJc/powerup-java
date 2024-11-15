@@ -1,12 +1,12 @@
 package powerup.v1.usecases.impl;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import powerup.v1.dtos.request.RecompensaDto;
 import powerup.v1.entities.Recompensa;
 import powerup.v1.repositories.RecompensaRepository;
 import powerup.v1.usecases.RecompensaService;
+import powerup.v1.usecases.exception.IdNotFoundException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,13 +34,13 @@ public class RecompensaServiceImpl implements RecompensaService {
     public RecompensaDto getById(Integer id) {
         return recompensaRepository.findById(id)
                 .map(this::mapToDTO)
-                .orElseThrow(() -> new EntityNotFoundException("Recompensa not found with id: " + id));
+                .orElseThrow(() -> new IdNotFoundException("Recompensa not found with id: " + id));
     }
 
     @Override
     public RecompensaDto update(Integer id, Recompensa recompensa) {
         if (!recompensaRepository.existsById(id)) {
-            throw new EntityNotFoundException("Recompensa not found with id: " + id);
+            throw new IdNotFoundException("Recompensa not found with id: " + id);
         }
         recompensa.setId(id);
         Recompensa updatedEntity = recompensaRepository.save(recompensa);
@@ -50,7 +50,7 @@ public class RecompensaServiceImpl implements RecompensaService {
     @Override
     public void delete(Integer id) {
         if (!recompensaRepository.existsById(id)) {
-            throw new EntityNotFoundException("Recompensa not found with id: " + id);
+            throw new IdNotFoundException("Recompensa not found with id: " + id);
         }
         recompensaRepository.deleteById(id);
     }

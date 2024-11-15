@@ -1,12 +1,12 @@
 package powerup.v1.usecases.impl;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import powerup.v1.dtos.request.EmblemaTipoDto;
 import powerup.v1.entities.EmblemaTipo;
 import powerup.v1.repositories.EmblemaTipoRepository;
 import powerup.v1.usecases.EmblemaTipoService;
+import powerup.v1.usecases.exception.IdNotFoundException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,13 +34,13 @@ public class EmblemaTipoServiceImpl implements EmblemaTipoService {
     public EmblemaTipoDto getById(Integer id) {
         return emblemaTipoRepository.findById(id)
                 .map(this::mapToDTO)
-                .orElseThrow(() -> new EntityNotFoundException("EmblemaTipo not found with id: " + id));
+                .orElseThrow(() -> new IdNotFoundException("EmblemaTipo not found with id: " + id));
     }
 
     @Override
     public EmblemaTipoDto update(Integer id, EmblemaTipo emblemaTipo) {
         if (!emblemaTipoRepository.existsById(id)) {
-            throw new EntityNotFoundException("EmblemaTipo not found with id: " + id);
+            throw new IdNotFoundException("EmblemaTipo not found with id: " + id);
         }
         emblemaTipo.setId(id);
         EmblemaTipo updatedEntity = emblemaTipoRepository.save(emblemaTipo);
@@ -50,7 +50,7 @@ public class EmblemaTipoServiceImpl implements EmblemaTipoService {
     @Override
     public void delete(Integer id) {
         if (!emblemaTipoRepository.existsById(id)) {
-            throw new EntityNotFoundException("EmblemaTipo not found with id: " + id);
+            throw new IdNotFoundException("EmblemaTipo not found with id: " + id);
         }
         emblemaTipoRepository.deleteById(id);
     }

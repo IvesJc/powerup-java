@@ -1,12 +1,12 @@
 package powerup.v1.usecases.impl;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import powerup.v1.dtos.request.LinkDto;
 import powerup.v1.entities.Link;
 import powerup.v1.repositories.LinkRepository;
 import powerup.v1.usecases.LinkService;
+import powerup.v1.usecases.exception.IdNotFoundException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,13 +35,13 @@ public class LinkServiceImpl implements LinkService {
     public LinkDto getById(Integer id) {
         return linkRepository.findById(id)
                 .map(this::mapToDTO)
-                .orElseThrow(() -> new EntityNotFoundException("Link not found with id: " + id));
+                .orElseThrow(() -> new IdNotFoundException("Link not found with id: " + id));
     }
 
     @Override
     public LinkDto update(Integer id, Link link) {
         if (!linkRepository.existsById(id)) {
-            throw new EntityNotFoundException("Link not found with id: " + id);
+            throw new IdNotFoundException("Link not found with id: " + id);
         }
         link.setId(id);
         Link updatedEntity = linkRepository.save(link);
@@ -51,7 +51,7 @@ public class LinkServiceImpl implements LinkService {
     @Override
     public void delete(Integer id) {
         if (!linkRepository.existsById(id)) {
-            throw new EntityNotFoundException("Link not found with id: " + id);
+            throw new IdNotFoundException("Link not found with id: " + id);
         }
         linkRepository.deleteById(id);
     }

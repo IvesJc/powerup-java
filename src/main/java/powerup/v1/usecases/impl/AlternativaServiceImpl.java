@@ -1,12 +1,12 @@
 package powerup.v1.usecases.impl;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import powerup.v1.dtos.request.AlternativaDto;
 import powerup.v1.entities.Alternativa;
 import powerup.v1.repositories.AlternativaRepository;
 import powerup.v1.usecases.AlternativaService;
+import powerup.v1.usecases.exception.IdNotFoundException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,13 +34,13 @@ public class AlternativaServiceImpl implements AlternativaService {
     public AlternativaDto getById(Integer id) {
         return alternativaRepository.findById(id)
                 .map(this::mapToDTO)
-                .orElseThrow(() -> new EntityNotFoundException("Alternativa not found with id: " + id));
+                .orElseThrow(() -> new IdNotFoundException("Alternativa not found with id: " + id));
     }
 
     @Override
     public AlternativaDto update(Integer id, Alternativa alternativa) {
         if (!alternativaRepository.existsById(id)) {
-            throw new EntityNotFoundException("Alternativa not found with id: " + id);
+            throw new IdNotFoundException("Alternativa not found with id: " + id);
         }
         alternativa.setId(id);
         Alternativa updatedEntity = alternativaRepository.save(alternativa);
@@ -50,7 +50,7 @@ public class AlternativaServiceImpl implements AlternativaService {
     @Override
     public void delete(Integer id) {
         if (!alternativaRepository.existsById(id)) {
-            throw new EntityNotFoundException("Alternativa not found with id: " + id);
+            throw new IdNotFoundException("Alternativa not found with id: " + id);
         }
         alternativaRepository.deleteById(id);
     }
