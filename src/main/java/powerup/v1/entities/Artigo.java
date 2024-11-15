@@ -34,7 +34,6 @@ public class Artigo {
     @JoinColumn(name = "thumb_link_id", nullable = false)
     private Link thumbLink;
 
-    // TODO: REVIEW RELACAO
     @ManyToOne
     @JoinColumn(name = "MODULO_EDUCATIVO_ID", nullable = false)
     private ModuloEducativo moduloEducativoId;
