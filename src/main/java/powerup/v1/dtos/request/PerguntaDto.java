@@ -1,10 +1,9 @@
-package powerup.v1.dtos;
-
-import java.util.List;
+package powerup.v1.dtos.request;
 
 public record PerguntaDto(
+        Integer id,
         String titulo,
         String conteudo,
-        List<Long> quizIds
+        QuizDto quiz
 ) {
 }
