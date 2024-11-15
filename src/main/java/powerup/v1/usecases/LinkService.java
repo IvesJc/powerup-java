@@ -1,9 +1,7 @@
 package powerup.v1.usecases;
 
-import powerup.v1.dtos.LinkDto;
-import powerup.v1.dtos.MissaoConfigDto;
+import powerup.v1.dtos.request.LinkDto;
 import powerup.v1.entities.Link;
-import powerup.v1.entities.MissaoConfig;
 
 import java.util.List;
 import java.util.Optional;

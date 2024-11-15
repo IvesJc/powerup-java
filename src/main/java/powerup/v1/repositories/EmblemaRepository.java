@@ -5,6 +5,6 @@ import powerup.v1.entities.Emblema;
 import powerup.v1.entities.Missao;
 
 @Repository
-public interface EmblemaRepository extends JpaRepository<Emblema, Long> {
+public interface EmblemaRepository extends JpaRepository<Emblema, Integer> {
 }
 

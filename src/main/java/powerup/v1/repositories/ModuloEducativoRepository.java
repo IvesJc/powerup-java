@@ -5,6 +5,6 @@ import powerup.v1.entities.Emblema;
 import powerup.v1.entities.ModuloEducativo;
 
 @Repository
-public interface ModuloEducativoRepository extends JpaRepository<ModuloEducativo, Long> {
+public interface ModuloEducativoRepository extends JpaRepository<ModuloEducativo, Integer> {
 }
 

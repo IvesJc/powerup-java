@@ -1,8 +1,6 @@
 package powerup.v1.usecases;
 
-import powerup.v1.dtos.LinkDto;
-import powerup.v1.dtos.RecompensaTipoDto;
-import powerup.v1.entities.Link;
+import powerup.v1.dtos.request.RecompensaTipoDto;
 import powerup.v1.entities.RecompensaTipo;
 
 import java.util.List;

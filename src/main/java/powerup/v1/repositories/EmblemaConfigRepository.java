@@ -5,6 +5,6 @@ import powerup.v1.entities.EmblemaConfig;
 import powerup.v1.entities.EmblemaTipo;
 
 @Repository
-public interface EmblemaConfigRepository extends JpaRepository<EmblemaConfig, Long> {
+public interface EmblemaConfigRepository extends JpaRepository<EmblemaConfig, Integer> {
 }
 

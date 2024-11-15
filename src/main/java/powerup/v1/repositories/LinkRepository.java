@@ -5,6 +5,6 @@ import powerup.v1.entities.Link;
 import powerup.v1.entities.Ranking;
 
 @Repository
-public interface LinkRepository extends JpaRepository<Link, Long> {
+public interface LinkRepository extends JpaRepository<Link, Integer> {
 }
 

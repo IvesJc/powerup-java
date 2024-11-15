@@ -5,6 +5,6 @@ import powerup.v1.entities.Desafio;
 import powerup.v1.entities.Ranking;
 
 @Repository
-public interface DesafioRepository extends JpaRepository<Desafio, Long> {
+public interface DesafioRepository extends JpaRepository<Desafio, Integer> {
 }
 

@@ -1,6 +1,6 @@
 package powerup.v1.usecases;
 
-import powerup.v1.dtos.EmblemaTipoDto;
+import powerup.v1.dtos.request.EmblemaTipoDto;
 import powerup.v1.entities.EmblemaTipo;
 
 import java.util.List;

@@ -5,6 +5,6 @@ import powerup.v1.entities.MissaoConfig;
 import powerup.v1.entities.Ranking;
 
 @Repository
-public interface RankingRepository extends JpaRepository<Ranking, Long> {
+public interface RankingRepository extends JpaRepository<Ranking, Integer> {
 }
 

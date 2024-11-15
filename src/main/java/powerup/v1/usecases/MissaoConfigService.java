@@ -1,6 +1,6 @@
 package powerup.v1.usecases;
 
-import powerup.v1.dtos.MissaoConfigDto;
+import powerup.v1.dtos.request.MissaoConfigDto;
 import powerup.v1.entities.MissaoConfig;
 
 import java.util.List;

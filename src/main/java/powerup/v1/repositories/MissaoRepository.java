@@ -5,6 +5,6 @@ import powerup.v1.entities.Missao;
 import powerup.v1.entities.MissaoConfig;
 
 @Repository
-public interface MissaoRepository extends JpaRepository<Missao, Long> {
+public interface MissaoRepository extends JpaRepository<Missao, Integer> {
 }
 

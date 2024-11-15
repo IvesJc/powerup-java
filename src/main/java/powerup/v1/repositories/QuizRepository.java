@@ -5,6 +5,6 @@ import powerup.v1.entities.Quiz;
 import powerup.v1.entities.Ranking;
 
 @Repository
-public interface QuizRepository extends JpaRepository<Quiz, Long> {
+public interface QuizRepository extends JpaRepository<Quiz, Integer> {
 }
 

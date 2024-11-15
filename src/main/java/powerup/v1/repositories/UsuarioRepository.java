@@ -5,6 +5,6 @@ import powerup.v1.entities.Link;
 import powerup.v1.entities.Usuario;
 
 @Repository
-public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
+public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 }
 

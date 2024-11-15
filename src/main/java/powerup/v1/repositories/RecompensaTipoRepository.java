@@ -5,6 +5,6 @@ import powerup.v1.entities.Link;
 import powerup.v1.entities.RecompensaTipo;
 
 @Repository
-public interface RecompensaTipoRepository extends JpaRepository<RecompensaTipo, Long> {
+public interface RecompensaTipoRepository extends JpaRepository<RecompensaTipo, Integer> {
 }
 

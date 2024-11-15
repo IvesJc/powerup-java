@@ -5,6 +5,6 @@ import powerup.v1.entities.Alternativa;
 import powerup.v1.entities.Artigo;
 
 @Repository
-public interface ArtigoRepository extends JpaRepository<Artigo, Long> {
+public interface ArtigoRepository extends JpaRepository<Artigo, Integer> {
 }
 
