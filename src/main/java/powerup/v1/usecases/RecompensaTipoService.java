@@ -8,12 +8,8 @@ import java.util.Optional;
 
 public interface RecompensaTipoService {
     RecompensaTipoDto create(RecompensaTipo recompensaTipo);
-
-    Optional<RecompensaTipoDto> getById(Long id);
-
     List<RecompensaTipoDto> getAll();
-
-    RecompensaTipoDto update(RecompensaTipo recompensaTipo);
-
-    void delete(Long id);
+    RecompensaTipoDto getById(Integer id);
+    RecompensaTipoDto update(Integer id, RecompensaTipo recompensaTipo);
+    void delete(Integer id);
 }

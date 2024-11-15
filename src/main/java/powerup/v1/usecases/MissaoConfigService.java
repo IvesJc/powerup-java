@@ -8,12 +8,8 @@ import java.util.Optional;
 
 public interface MissaoConfigService {
     MissaoConfigDto create(MissaoConfig missaoConfig);
-
-    MissaoConfigDto update(MissaoConfig missaoConfig);
-
-    Optional<MissaoConfig> getById(Long id);
-
     List<MissaoConfigDto> getAll();
-
-    void delete(Long id);
+    MissaoConfigDto getById(Integer id);
+    MissaoConfigDto update(Integer id, MissaoConfig missaoConfig);
+    void delete(Integer id);
 }

@@ -8,8 +8,8 @@ import java.util.Optional;
 
 public interface EmblemaTipoService {
     EmblemaTipoDto create(EmblemaTipo emblemaTipo);
-
-    Optional<EmblemaTipoDto> getById(Long id);
-
     List<EmblemaTipoDto> getAll();
+    EmblemaTipoDto getById(Integer id);
+    EmblemaTipoDto update(Integer id, EmblemaTipo emblemaTipo);
+    void delete(Integer id);
 }

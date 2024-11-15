@@ -8,12 +8,9 @@ import java.util.Optional;
 
 public interface LinkService {
     LinkDto create(Link link);
-
-    LinkDto update(Link link);
-
-    Optional<LinkDto> getById(Long id);
-
     List<LinkDto> getAll();
-
-    void delete(Long id);
+    LinkDto getById(Integer id);
+    LinkDto update(Integer id, Link link);
+    void delete(Integer id);
+    
 }

@@ -8,8 +8,8 @@ import java.util.Optional;
 
 public interface RankingService {
     RankingDto create(Ranking ranking);
-
-    Optional<RankingDto> getById(Long id);
-
     List<RankingDto> getAll();
+    RankingDto getById(Integer id);
+    RankingDto update(Integer id, Ranking ranking);
+    void delete(Integer id);
 }
