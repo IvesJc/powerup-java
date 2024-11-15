@@ -9,7 +9,7 @@ public record QuizDto(
         String nome,
         String descricao,
         String categoria,
-        Double notaMinima,
+        Integer notaMinima,
         Integer moduloEducativo
 ) {
 }

@@ -30,7 +30,7 @@ public class Quiz {
 
     @NotNull
     @Column(name = "nota_minima")
-    private Double notaMinima;
+    private Integer notaMinima;
 
     @ManyToOne
     @JoinColumn(name = "modulo_educativo_id", nullable = false)
