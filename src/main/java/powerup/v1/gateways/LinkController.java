@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import powerup.v1.dtos.request.LinkDto;
+import powerup.v1.dtos.request.LinkRequestDto;
 import powerup.v1.entities.Link;
 import powerup.v1.usecases.LinkService;
 
@@ -20,26 +20,26 @@ public class LinkController {
     private final LinkService linkService;
 
     @PostMapping
-    public ResponseEntity<LinkDto> create(@RequestBody Link link) {
-        LinkDto createdLink = linkService.create(link);
+    public ResponseEntity<LinkRequestDto> create(@RequestBody Link link) {
+        LinkRequestDto createdLink = linkService.create(link);
         return new ResponseEntity<>(createdLink, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<List<LinkDto>> getAll() {
-        List<LinkDto> linkList = linkService.getAll();
+    public ResponseEntity<List<LinkRequestDto>> getAll() {
+        List<LinkRequestDto> linkList = linkService.getAll();
         return new ResponseEntity<>(linkList, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<LinkDto> getById(@PathVariable Integer id) {
-        LinkDto link = linkService.getById(id);
+    public ResponseEntity<LinkRequestDto> getById(@PathVariable Integer id) {
+        LinkRequestDto link = linkService.getById(id);
         return new ResponseEntity<>(link, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<LinkDto> update(@PathVariable Integer id, @RequestBody Link link) {
-        LinkDto updatedLink = linkService.update(id, link);
+    public ResponseEntity<LinkRequestDto> update(@PathVariable Integer id, @RequestBody Link link) {
+        LinkRequestDto updatedLink = linkService.update(id, link);
         return new ResponseEntity<>(updatedLink, HttpStatus.OK);
     }
 

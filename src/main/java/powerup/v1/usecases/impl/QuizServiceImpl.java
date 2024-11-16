@@ -2,7 +2,7 @@ package powerup.v1.usecases.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import powerup.v1.dtos.request.QuizDto;
+import powerup.v1.dtos.request.QuizRequestDto;
 import powerup.v1.entities.Quiz;
 import powerup.v1.repositories.QuizRepository;
 import powerup.v1.usecases.QuizService;
@@ -17,13 +17,13 @@ public class QuizServiceImpl implements QuizService {
     private final QuizRepository quizRepository;
 
     @Override
-    public QuizDto create(Quiz quiz) {
+    public QuizRequestDto create(Quiz quiz) {
         Quiz savedEntity = quizRepository.save(quiz);
         return mapToDTO(savedEntity);
     }
 
     @Override
-    public List<QuizDto> getAll() {
+    public List<QuizRequestDto> getAll() {
         return quizRepository.findAll()
                 .stream()
                 .map(this::mapToDTO)
@@ -31,14 +31,14 @@ public class QuizServiceImpl implements QuizService {
     }
 
     @Override
-    public QuizDto getById(Integer id) {
+    public QuizRequestDto getById(Integer id) {
         return quizRepository.findById(id)
                 .map(this::mapToDTO)
                 .orElseThrow(() -> new IdNotFoundException("Quiz not found with id: " + id));
     }
 
     @Override
-    public QuizDto update(Integer id, Quiz quiz) {
+    public QuizRequestDto update(Integer id, Quiz quiz) {
         if (!quizRepository.existsById(id)) {
             throw new IdNotFoundException("Quiz not found with id: " + id);
         }
@@ -55,8 +55,8 @@ public class QuizServiceImpl implements QuizService {
         quizRepository.deleteById(id);
     }
 
-    private QuizDto mapToDTO(Quiz quiz) {
-        return QuizDto.builder()
+    private QuizRequestDto mapToDTO(Quiz quiz) {
+        return QuizRequestDto.builder()
                 .id(quiz.getId())
                 .nome(quiz.getNome())
                 .descricao(quiz.getDescricao())

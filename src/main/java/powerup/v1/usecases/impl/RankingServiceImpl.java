@@ -2,7 +2,7 @@ package powerup.v1.usecases.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import powerup.v1.dtos.request.RankingDto;
+import powerup.v1.dtos.request.RankingRequestDto;
 import powerup.v1.entities.Ranking;
 import powerup.v1.repositories.RankingRepository;
 import powerup.v1.usecases.RankingService;
@@ -19,13 +19,13 @@ public class RankingServiceImpl implements RankingService {
 
 
     @Override
-    public RankingDto create(Ranking ranking) {
+    public RankingRequestDto create(Ranking ranking) {
         Ranking savedEntity = rankingRepository.save(ranking);
         return mapToDTO(savedEntity);
     }
 
     @Override
-    public List<RankingDto> getAll() {
+    public List<RankingRequestDto> getAll() {
         return rankingRepository.findAll()
                 .stream()
                 .map(this::mapToDTO)
@@ -33,14 +33,14 @@ public class RankingServiceImpl implements RankingService {
     }
 
     @Override
-    public RankingDto getById(Integer id) {
+    public RankingRequestDto getById(Integer id) {
         return rankingRepository.findById(id)
                 .map(this::mapToDTO)
                 .orElseThrow(() -> new IdNotFoundException("Ranking not found with id: " + id));
     }
 
     @Override
-    public RankingDto update(Integer id, Ranking ranking) {
+    public RankingRequestDto update(Integer id, Ranking ranking) {
         if (!rankingRepository.existsById(id)) {
             throw new IdNotFoundException("Ranking not found with id: " + id);
         }
@@ -57,8 +57,8 @@ public class RankingServiceImpl implements RankingService {
         rankingRepository.deleteById(id);
     }
 
-    private RankingDto mapToDTO(Ranking ranking) {
-        return RankingDto.builder()
+    private RankingRequestDto mapToDTO(Ranking ranking) {
+        return RankingRequestDto.builder()
                 .id(ranking.getId())
                 .nome(ranking.getNome())
                 .build();

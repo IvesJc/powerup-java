@@ -3,7 +3,7 @@ package powerup.v1.dtos.request;
 import lombok.Builder;
 
 @Builder
-public record PerguntaDto(
+public record PerguntaRequestDto(
         Integer id,
         String titulo,
         String conteudo,

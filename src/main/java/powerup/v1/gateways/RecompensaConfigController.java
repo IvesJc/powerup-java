@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import powerup.v1.dtos.request.RecompensaConfigDto;
+import powerup.v1.dtos.request.RecompensaConfigRequestDto;
 import powerup.v1.entities.RecompensaConfig;
 import powerup.v1.usecases.RecompensaConfigService;
 
@@ -20,26 +20,26 @@ public class RecompensaConfigController {
     private final RecompensaConfigService recompensaConfigService;
 
     @PostMapping
-    public ResponseEntity<RecompensaConfigDto> create(@RequestBody RecompensaConfig recompensaConfig) {
-        RecompensaConfigDto createdRecompensaConfig = recompensaConfigService.create(recompensaConfig);
+    public ResponseEntity<RecompensaConfigRequestDto> create(@RequestBody RecompensaConfig recompensaConfig) {
+        RecompensaConfigRequestDto createdRecompensaConfig = recompensaConfigService.create(recompensaConfig);
         return new ResponseEntity<>(createdRecompensaConfig, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<List<RecompensaConfigDto>> getAll() {
-        List<RecompensaConfigDto> recompensaConfigList = recompensaConfigService.getAll();
+    public ResponseEntity<List<RecompensaConfigRequestDto>> getAll() {
+        List<RecompensaConfigRequestDto> recompensaConfigList = recompensaConfigService.getAll();
         return new ResponseEntity<>(recompensaConfigList, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RecompensaConfigDto> getById(@PathVariable Integer id) {
-        RecompensaConfigDto recompensaConfig = recompensaConfigService.getById(id);
+    public ResponseEntity<RecompensaConfigRequestDto> getById(@PathVariable Integer id) {
+        RecompensaConfigRequestDto recompensaConfig = recompensaConfigService.getById(id);
         return new ResponseEntity<>(recompensaConfig, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RecompensaConfigDto> update(@PathVariable Integer id, @RequestBody RecompensaConfig recompensaConfig) {
-        RecompensaConfigDto updatedRecompensaConfig = recompensaConfigService.update(id, recompensaConfig);
+    public ResponseEntity<RecompensaConfigRequestDto> update(@PathVariable Integer id, @RequestBody RecompensaConfig recompensaConfig) {
+        RecompensaConfigRequestDto updatedRecompensaConfig = recompensaConfigService.update(id, recompensaConfig);
         return new ResponseEntity<>(updatedRecompensaConfig, HttpStatus.OK);
     }
 

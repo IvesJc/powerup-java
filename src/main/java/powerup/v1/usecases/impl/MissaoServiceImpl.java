@@ -2,7 +2,7 @@ package powerup.v1.usecases.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import powerup.v1.dtos.request.MissaoDto;
+import powerup.v1.dtos.request.MissaoRequestDto;
 import powerup.v1.entities.Missao;
 import powerup.v1.repositories.MissaoRepository;
 import powerup.v1.usecases.MissaoService;
@@ -17,13 +17,13 @@ public class MissaoServiceImpl implements MissaoService {
     private final MissaoRepository missaoRepository;
 
     @Override
-    public MissaoDto create(Missao missao) {
+    public MissaoRequestDto create(Missao missao) {
         Missao savedEntity = missaoRepository.save(missao);
         return mapToDTO(savedEntity);
     }
 
     @Override
-    public List<MissaoDto> getAll() {
+    public List<MissaoRequestDto> getAll() {
         return missaoRepository.findAll()
                 .stream()
                 .map(this::mapToDTO)
@@ -31,14 +31,14 @@ public class MissaoServiceImpl implements MissaoService {
     }
 
     @Override
-    public MissaoDto getById(Integer id) {
+    public MissaoRequestDto getById(Integer id) {
         return missaoRepository.findById(id)
                 .map(this::mapToDTO)
                 .orElseThrow(() -> new IdNotFoundException("Missao not found with id: " + id));
     }
 
     @Override
-    public MissaoDto update(Integer id, Missao missao) {
+    public MissaoRequestDto update(Integer id, Missao missao) {
         if (!missaoRepository.existsById(id)) {
             throw new IdNotFoundException("Missao not found with id: " + id);
         }
@@ -55,8 +55,8 @@ public class MissaoServiceImpl implements MissaoService {
         missaoRepository.deleteById(id);
     }
 
-    private MissaoDto mapToDTO(Missao missao) {
-        return MissaoDto.builder()
+    private MissaoRequestDto mapToDTO(Missao missao) {
+        return MissaoRequestDto.builder()
                 .id(missao.getId())
                 .recompensaPontos(missao.getRecompensaPontos())
                 .status(missao.getStatus())

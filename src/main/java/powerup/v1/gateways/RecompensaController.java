@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import powerup.v1.dtos.request.RecompensaDto;
+import powerup.v1.dtos.request.RecompensaRequestDto;
 import powerup.v1.entities.Recompensa;
 import powerup.v1.usecases.RecompensaService;
 
@@ -20,26 +20,26 @@ public class RecompensaController {
     private final RecompensaService recompensaService;
 
     @PostMapping
-    public ResponseEntity<RecompensaDto> create(@RequestBody Recompensa recompensa) {
-        RecompensaDto createdRecompensa = recompensaService.create(recompensa);
+    public ResponseEntity<RecompensaRequestDto> create(@RequestBody Recompensa recompensa) {
+        RecompensaRequestDto createdRecompensa = recompensaService.create(recompensa);
         return new ResponseEntity<>(createdRecompensa, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<List<RecompensaDto>> getAll() {
-        List<RecompensaDto> recompensaList = recompensaService.getAll();
+    public ResponseEntity<List<RecompensaRequestDto>> getAll() {
+        List<RecompensaRequestDto> recompensaList = recompensaService.getAll();
         return new ResponseEntity<>(recompensaList, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RecompensaDto> getById(@PathVariable Integer id) {
-        RecompensaDto recompensa = recompensaService.getById(id);
+    public ResponseEntity<RecompensaRequestDto> getById(@PathVariable Integer id) {
+        RecompensaRequestDto recompensa = recompensaService.getById(id);
         return new ResponseEntity<>(recompensa, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RecompensaDto> update(@PathVariable Integer id, @RequestBody Recompensa recompensa) {
-        RecompensaDto updatedRecompensa = recompensaService.update(id, recompensa);
+    public ResponseEntity<RecompensaRequestDto> update(@PathVariable Integer id, @RequestBody Recompensa recompensa) {
+        RecompensaRequestDto updatedRecompensa = recompensaService.update(id, recompensa);
         return new ResponseEntity<>(updatedRecompensa, HttpStatus.OK);
     }
 

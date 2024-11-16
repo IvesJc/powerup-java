@@ -2,7 +2,7 @@ package powerup.v1.usecases.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import powerup.v1.dtos.request.RecompensaTipoDto;
+import powerup.v1.dtos.request.RecompensaTipoRequestDto;
 import powerup.v1.entities.RecompensaTipo;
 import powerup.v1.repositories.RecompensaTipoRepository;
 import powerup.v1.usecases.RecompensaTipoService;
@@ -18,13 +18,13 @@ public class RecompensaTipoServiceImpl implements RecompensaTipoService {
 
 
     @Override
-    public RecompensaTipoDto create(RecompensaTipo recompensaTipo) {
+    public RecompensaTipoRequestDto create(RecompensaTipo recompensaTipo) {
         RecompensaTipo savedEntity = recompensaTipoRepository.save(recompensaTipo);
         return mapToDTO(savedEntity);
     }
 
     @Override
-    public List<RecompensaTipoDto> getAll() {
+    public List<RecompensaTipoRequestDto> getAll() {
         return recompensaTipoRepository.findAll()
                 .stream()
                 .map(this::mapToDTO)
@@ -32,14 +32,14 @@ public class RecompensaTipoServiceImpl implements RecompensaTipoService {
     }
 
     @Override
-    public RecompensaTipoDto getById(Integer id) {
+    public RecompensaTipoRequestDto getById(Integer id) {
         return recompensaTipoRepository.findById(id)
                 .map(this::mapToDTO)
                 .orElseThrow(() -> new IdNotFoundException("RecompensaTipo not found with id: " + id));
     }
 
     @Override
-    public RecompensaTipoDto update(Integer id, RecompensaTipo recompensaTipo) {
+    public RecompensaTipoRequestDto update(Integer id, RecompensaTipo recompensaTipo) {
         if (!recompensaTipoRepository.existsById(id)) {
             throw new IdNotFoundException("RecompensaTipo not found with id: " + id);
         }
@@ -56,8 +56,8 @@ public class RecompensaTipoServiceImpl implements RecompensaTipoService {
         recompensaTipoRepository.deleteById(id);
     }
 
-    private RecompensaTipoDto mapToDTO(RecompensaTipo recompensaTipo) {
-        return RecompensaTipoDto.builder()
+    private RecompensaTipoRequestDto mapToDTO(RecompensaTipo recompensaTipo) {
+        return RecompensaTipoRequestDto.builder()
                 .id(recompensaTipo.getId())
                 .nome(recompensaTipo.getNome())
                 .descricao(recompensaTipo.getDescricao())

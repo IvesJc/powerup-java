@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import powerup.v1.dtos.request.EmblemaConfigDto;
+import powerup.v1.dtos.request.EmblemaConfigRequestDto;
 import powerup.v1.entities.EmblemaConfig;
 import powerup.v1.usecases.EmblemaConfigService;
 
@@ -20,26 +20,26 @@ public class EmblemaConfigController {
     private final EmblemaConfigService emblemaConfigService;
 
     @PostMapping
-    public ResponseEntity<EmblemaConfigDto> create(@RequestBody EmblemaConfig emblemaConfig) {
-        EmblemaConfigDto createdEmblemaConfig = emblemaConfigService.create(emblemaConfig);
+    public ResponseEntity<EmblemaConfigRequestDto> create(@RequestBody EmblemaConfig emblemaConfig) {
+        EmblemaConfigRequestDto createdEmblemaConfig = emblemaConfigService.create(emblemaConfig);
         return new ResponseEntity<>(createdEmblemaConfig, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<List<EmblemaConfigDto>> getAll() {
-        List<EmblemaConfigDto> emblemaConfigList = emblemaConfigService.getAll();
+    public ResponseEntity<List<EmblemaConfigRequestDto>> getAll() {
+        List<EmblemaConfigRequestDto> emblemaConfigList = emblemaConfigService.getAll();
         return new ResponseEntity<>(emblemaConfigList, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EmblemaConfigDto> getById(@PathVariable Integer id) {
-        EmblemaConfigDto emblemaConfig = emblemaConfigService.getById(id);
+    public ResponseEntity<EmblemaConfigRequestDto> getById(@PathVariable Integer id) {
+        EmblemaConfigRequestDto emblemaConfig = emblemaConfigService.getById(id);
         return new ResponseEntity<>(emblemaConfig, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<EmblemaConfigDto> update(@PathVariable Integer id, @RequestBody EmblemaConfig emblemaConfig) {
-        EmblemaConfigDto updatedEmblemaConfig = emblemaConfigService.update(id, emblemaConfig);
+    public ResponseEntity<EmblemaConfigRequestDto> update(@PathVariable Integer id, @RequestBody EmblemaConfig emblemaConfig) {
+        EmblemaConfigRequestDto updatedEmblemaConfig = emblemaConfigService.update(id, emblemaConfig);
         return new ResponseEntity<>(updatedEmblemaConfig, HttpStatus.OK);
     }
 

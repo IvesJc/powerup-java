@@ -2,7 +2,7 @@ package powerup.v1.usecases.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import powerup.v1.dtos.request.UsuarioDto;
+import powerup.v1.dtos.request.UsuarioRequestDto;
 import powerup.v1.entities.Usuario;
 import powerup.v1.repositories.UsuarioRepository;
 import powerup.v1.usecases.UsuarioService;
@@ -17,13 +17,13 @@ public class UsuarioServiceImpl implements UsuarioService {
     private final UsuarioRepository usuarioRepository;
 
     @Override
-    public UsuarioDto create(Usuario usuario) {
+    public UsuarioRequestDto create(Usuario usuario) {
         Usuario savedEntity = usuarioRepository.save(usuario);
         return mapToDTO(savedEntity);
     }
 
     @Override
-    public List<UsuarioDto> getAll() {
+    public List<UsuarioRequestDto> getAll() {
         return usuarioRepository.findAll()
                 .stream()
                 .map(this::mapToDTO)
@@ -31,14 +31,14 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public UsuarioDto getById(Integer id) {
+    public UsuarioRequestDto getById(Integer id) {
         return usuarioRepository.findById(id)
                 .map(this::mapToDTO)
                 .orElseThrow(() -> new IdNotFoundException("Usuario not found with id: " + id));
     }
 
     @Override
-    public UsuarioDto update(Integer id, Usuario usuario) {
+    public UsuarioRequestDto update(Integer id, Usuario usuario) {
         if (!usuarioRepository.existsById(id)) {
             throw new IdNotFoundException("Usuario not found with id: " + id);
         }
@@ -55,8 +55,8 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuarioRepository.deleteById(id);
     }
 
-    private UsuarioDto mapToDTO(Usuario usuario) {
-        return UsuarioDto.builder()
+    private UsuarioRequestDto mapToDTO(Usuario usuario) {
+        return UsuarioRequestDto.builder()
                 .id(usuario.getId())
                 .firebaseUid(usuario.getFirebaseUid())
                 .email(usuario.getEmail())

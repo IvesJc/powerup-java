@@ -2,7 +2,7 @@ package powerup.v1.usecases.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import powerup.v1.dtos.request.PerguntaDto;
+import powerup.v1.dtos.request.PerguntaRequestDto;
 import powerup.v1.entities.Pergunta;
 import powerup.v1.repositories.PerguntaRepository;
 import powerup.v1.usecases.PerguntaService;
@@ -17,13 +17,13 @@ public class PerguntaServiceImpl implements PerguntaService {
     private final PerguntaRepository perguntaRepository;
 
     @Override
-    public PerguntaDto create(Pergunta pergunta) {
+    public PerguntaRequestDto create(Pergunta pergunta) {
         Pergunta savedEntity = perguntaRepository.save(pergunta);
         return mapToDTO(savedEntity);
     }
 
     @Override
-    public List<PerguntaDto> getAll() {
+    public List<PerguntaRequestDto> getAll() {
         return perguntaRepository.findAll()
                 .stream()
                 .map(this::mapToDTO)
@@ -31,14 +31,14 @@ public class PerguntaServiceImpl implements PerguntaService {
     }
 
     @Override
-    public PerguntaDto getById(Integer id) {
+    public PerguntaRequestDto getById(Integer id) {
         return perguntaRepository.findById(id)
                 .map(this::mapToDTO)
                 .orElseThrow(() -> new IdNotFoundException("Pergunta not found with id: " + id));
     }
 
     @Override
-    public PerguntaDto update(Integer id, Pergunta pergunta) {
+    public PerguntaRequestDto update(Integer id, Pergunta pergunta) {
         if (!perguntaRepository.existsById(id)) {
             throw new IdNotFoundException("Pergunta not found with id: " + id);
         }
@@ -55,8 +55,8 @@ public class PerguntaServiceImpl implements PerguntaService {
         perguntaRepository.deleteById(id);
     }
 
-    private PerguntaDto mapToDTO(Pergunta pergunta) {
-        return PerguntaDto.builder()
+    private PerguntaRequestDto mapToDTO(Pergunta pergunta) {
+        return PerguntaRequestDto.builder()
                 .id(pergunta.getId())
                 .titulo(pergunta.getTitulo())
                 .conteudo(pergunta.getConteudo())

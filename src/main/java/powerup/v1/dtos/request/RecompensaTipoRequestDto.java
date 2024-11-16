@@ -3,9 +3,9 @@ package powerup.v1.dtos.request;
 import lombok.Builder;
 
 @Builder
-public record LinkDto(
+public record RecompensaTipoRequestDto(
         Integer id,
-        String url,
+        String nome,
         String descricao
 ) {
 }

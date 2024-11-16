@@ -3,9 +3,11 @@ package powerup.v1.dtos.request;
 import lombok.Builder;
 
 @Builder
-public record EmblemaTipoDto(
+public record DesafioRequestDto(
         Integer id,
         String nome,
-        Integer imageLink
+        String descricao,
+        Integer thumbLink,
+        Integer quiz
 ) {
 }

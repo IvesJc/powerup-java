@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import powerup.v1.dtos.request.EmblemaTipoDto;
+import powerup.v1.dtos.request.EmblemaTipoRequestDto;
 import powerup.v1.entities.EmblemaTipo;
 import powerup.v1.usecases.EmblemaTipoService;
 
@@ -20,26 +20,26 @@ public class EmblemaTipoController {
     private final EmblemaTipoService emblemaTipoService;
     
     @PostMapping
-    public ResponseEntity<EmblemaTipoDto> create(@RequestBody EmblemaTipo emblemaTipo) {
-        EmblemaTipoDto createdEmblemaTipo = emblemaTipoService.create(emblemaTipo);
+    public ResponseEntity<EmblemaTipoRequestDto> create(@RequestBody EmblemaTipo emblemaTipo) {
+        EmblemaTipoRequestDto createdEmblemaTipo = emblemaTipoService.create(emblemaTipo);
         return new ResponseEntity<>(createdEmblemaTipo, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<List<EmblemaTipoDto>> getAll() {
-        List<EmblemaTipoDto> emblemaTipoList = emblemaTipoService.getAll();
+    public ResponseEntity<List<EmblemaTipoRequestDto>> getAll() {
+        List<EmblemaTipoRequestDto> emblemaTipoList = emblemaTipoService.getAll();
         return new ResponseEntity<>(emblemaTipoList, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EmblemaTipoDto> getById(@PathVariable Integer id) {
-        EmblemaTipoDto emblemaTipo = emblemaTipoService.getById(id);
+    public ResponseEntity<EmblemaTipoRequestDto> getById(@PathVariable Integer id) {
+        EmblemaTipoRequestDto emblemaTipo = emblemaTipoService.getById(id);
         return new ResponseEntity<>(emblemaTipo, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<EmblemaTipoDto> update(@PathVariable Integer id, @RequestBody EmblemaTipo emblemaTipo) {
-        EmblemaTipoDto updatedEmblemaTipo = emblemaTipoService.update(id, emblemaTipo);
+    public ResponseEntity<EmblemaTipoRequestDto> update(@PathVariable Integer id, @RequestBody EmblemaTipo emblemaTipo) {
+        EmblemaTipoRequestDto updatedEmblemaTipo = emblemaTipoService.update(id, emblemaTipo);
         return new ResponseEntity<>(updatedEmblemaTipo, HttpStatus.OK);
     }
 

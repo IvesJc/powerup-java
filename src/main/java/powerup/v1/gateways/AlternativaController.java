@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import powerup.v1.dtos.request.AlternativaDto;
+import powerup.v1.dtos.request.AlternativaRequestDto;
 import powerup.v1.entities.Alternativa;
 import powerup.v1.usecases.impl.AlternativaServiceImpl;
 
@@ -21,29 +21,29 @@ public class AlternativaController {
 
     // Endpoint para criar uma alternativa
     @PostMapping
-    public ResponseEntity<AlternativaDto> create(@RequestBody Alternativa alternativa) {
-        AlternativaDto createdAlternativa = alternativaService.create(alternativa);
+    public ResponseEntity<AlternativaRequestDto> create(@RequestBody Alternativa alternativa) {
+        AlternativaRequestDto createdAlternativa = alternativaService.create(alternativa);
         return new ResponseEntity<>(createdAlternativa, HttpStatus.CREATED);
     }
 
     // Endpoint para obter todas as alternativas
     @GetMapping
-    public ResponseEntity<List<AlternativaDto>> getAll() {
-        List<AlternativaDto> alternativaList = alternativaService.getAll();
+    public ResponseEntity<List<AlternativaRequestDto>> getAll() {
+        List<AlternativaRequestDto> alternativaList = alternativaService.getAll();
         return new ResponseEntity<>(alternativaList, HttpStatus.OK);
     }
 
     // Endpoint para obter uma alternativa por ID
     @GetMapping("/{id}")
-    public ResponseEntity<AlternativaDto> getById(@PathVariable Integer id) {
-        AlternativaDto alternativa = alternativaService.getById(id);
+    public ResponseEntity<AlternativaRequestDto> getById(@PathVariable Integer id) {
+        AlternativaRequestDto alternativa = alternativaService.getById(id);
         return new ResponseEntity<>(alternativa, HttpStatus.OK);
     }
 
     // Endpoint para atualizar uma alternativa
     @PutMapping("/{id}")
-    public ResponseEntity<AlternativaDto> update(@PathVariable Integer id, @RequestBody Alternativa alternativa) {
-        AlternativaDto updatedAlternativa = alternativaService.update(id, alternativa);
+    public ResponseEntity<AlternativaRequestDto> update(@PathVariable Integer id, @RequestBody Alternativa alternativa) {
+        AlternativaRequestDto updatedAlternativa = alternativaService.update(id, alternativa);
         return ResponseEntity.ok(updatedAlternativa);
     }
 

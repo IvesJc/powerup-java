@@ -2,7 +2,7 @@ package powerup.v1.usecases.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import powerup.v1.dtos.request.MissaoConfigDto;
+import powerup.v1.dtos.request.MissaoConfigRequestDto;
 import powerup.v1.entities.MissaoConfig;
 import powerup.v1.repositories.MissaoConfigRepository;
 import powerup.v1.usecases.MissaoConfigService;
@@ -18,13 +18,13 @@ public class MissaoConfigServiceImpl implements MissaoConfigService {
 
 
     @Override
-    public MissaoConfigDto create(MissaoConfig missaoConfig) {
+    public MissaoConfigRequestDto create(MissaoConfig missaoConfig) {
         MissaoConfig savedEntity = missaoConfigRepository.save(missaoConfig);
         return mapToDTO(savedEntity);
     }
 
     @Override
-    public List<MissaoConfigDto> getAll() {
+    public List<MissaoConfigRequestDto> getAll() {
         return missaoConfigRepository.findAll()
                 .stream()
                 .map(this::mapToDTO)
@@ -32,14 +32,14 @@ public class MissaoConfigServiceImpl implements MissaoConfigService {
     }
 
     @Override
-    public MissaoConfigDto getById(Integer id) {
+    public MissaoConfigRequestDto getById(Integer id) {
         return missaoConfigRepository.findById(id)
                 .map(this::mapToDTO)
                 .orElseThrow(() -> new IdNotFoundException("MissaoConfig not found with id: " + id));
     }
 
     @Override
-    public MissaoConfigDto update(Integer id, MissaoConfig missaoConfig) {
+    public MissaoConfigRequestDto update(Integer id, MissaoConfig missaoConfig) {
         if (!missaoConfigRepository.existsById(id)) {
             throw new IdNotFoundException("MissaoConfig not found with id: " + id);
         }
@@ -56,8 +56,8 @@ public class MissaoConfigServiceImpl implements MissaoConfigService {
         missaoConfigRepository.deleteById(id);
     }
 
-    private MissaoConfigDto mapToDTO(MissaoConfig missaoConfig) {
-        return MissaoConfigDto.builder()
+    private MissaoConfigRequestDto mapToDTO(MissaoConfig missaoConfig) {
+        return MissaoConfigRequestDto.builder()
                 .id(missaoConfig.getId())
                 .nome(missaoConfig.getNome())
                 .descricao(missaoConfig.getDescricao())

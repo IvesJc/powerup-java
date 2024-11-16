@@ -2,7 +2,7 @@ package powerup.v1.usecases.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import powerup.v1.dtos.request.PermissaoDto;
+import powerup.v1.dtos.request.PermissaoRequestDto;
 import powerup.v1.entities.Permissao;
 import powerup.v1.repositories.PermissaoRepository;
 import powerup.v1.usecases.PermissaoService;
@@ -17,13 +17,13 @@ public class PermissaoServiceImpl implements PermissaoService {
     private final PermissaoRepository permissaoRepository;
 
     @Override
-    public PermissaoDto create(Permissao permissao) {
+    public PermissaoRequestDto create(Permissao permissao) {
         Permissao savedEntity = permissaoRepository.save(permissao);
         return mapToDTO(savedEntity);
     }
 
     @Override
-    public List<PermissaoDto> getAll() {
+    public List<PermissaoRequestDto> getAll() {
         return permissaoRepository.findAll()
                 .stream()
                 .map(this::mapToDTO)
@@ -31,14 +31,14 @@ public class PermissaoServiceImpl implements PermissaoService {
     }
 
     @Override
-    public PermissaoDto getById(Integer id) {
+    public PermissaoRequestDto getById(Integer id) {
         return permissaoRepository.findById(id)
                 .map(this::mapToDTO)
                 .orElseThrow(() -> new IdNotFoundException("Permissao not found with id: " + id));
     }
 
     @Override
-    public PermissaoDto update(Integer id, Permissao permissao) {
+    public PermissaoRequestDto update(Integer id, Permissao permissao) {
         if (!permissaoRepository.existsById(id)) {
             throw new IdNotFoundException("Permissao not found with id: " + id);
         }
@@ -55,8 +55,8 @@ public class PermissaoServiceImpl implements PermissaoService {
         permissaoRepository.deleteById(id);
     }
 
-    private PermissaoDto mapToDTO(Permissao permissao) {
-        return PermissaoDto.builder()
+    private PermissaoRequestDto mapToDTO(Permissao permissao) {
+        return PermissaoRequestDto.builder()
                 .id(permissao.getId())
                 .nome(permissao.getNome())
                 .descricao(permissao.getDescricao())

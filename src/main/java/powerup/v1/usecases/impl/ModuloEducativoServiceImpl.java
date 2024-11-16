@@ -2,7 +2,7 @@ package powerup.v1.usecases.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import powerup.v1.dtos.request.ModuloEducativoDto;
+import powerup.v1.dtos.request.ModuloEducativoRequestDto;
 import powerup.v1.entities.ModuloEducativo;
 import powerup.v1.repositories.ModuloEducativoRepository;
 import powerup.v1.usecases.ModuloEducativoService;
@@ -18,13 +18,13 @@ public class ModuloEducativoServiceImpl implements ModuloEducativoService {
 
 
     @Override
-    public ModuloEducativoDto create(ModuloEducativo moduloEducativo) {
+    public ModuloEducativoRequestDto create(ModuloEducativo moduloEducativo) {
         ModuloEducativo savedEntity = moduloEducativoRepository.save(moduloEducativo);
         return mapToDTO(savedEntity);
     }
 
     @Override
-    public List<ModuloEducativoDto> getAll() {
+    public List<ModuloEducativoRequestDto> getAll() {
         return moduloEducativoRepository.findAll()
                 .stream()
                 .map(this::mapToDTO)
@@ -32,14 +32,14 @@ public class ModuloEducativoServiceImpl implements ModuloEducativoService {
     }
 
     @Override
-    public ModuloEducativoDto getById(Integer id) {
+    public ModuloEducativoRequestDto getById(Integer id) {
         return moduloEducativoRepository.findById(id)
                 .map(this::mapToDTO)
                 .orElseThrow(() -> new IdNotFoundException("ModuloEducativo not found with id: " + id));
     }
 
     @Override
-    public ModuloEducativoDto update(Integer id, ModuloEducativo moduloEducativo) {
+    public ModuloEducativoRequestDto update(Integer id, ModuloEducativo moduloEducativo) {
         if (!moduloEducativoRepository.existsById(id)) {
             throw new IdNotFoundException("ModuloEducativo not found with id: " + id);
         }
@@ -56,8 +56,8 @@ public class ModuloEducativoServiceImpl implements ModuloEducativoService {
         moduloEducativoRepository.deleteById(id);
     }
 
-    private ModuloEducativoDto mapToDTO(ModuloEducativo moduloEducativo) {
-        return ModuloEducativoDto.builder()
+    private ModuloEducativoRequestDto mapToDTO(ModuloEducativo moduloEducativo) {
+        return ModuloEducativoRequestDto.builder()
                 .id(moduloEducativo.getId())
                 .titulo(moduloEducativo.getTitulo())
                 .subtitulo(moduloEducativo.getSubtitulo())

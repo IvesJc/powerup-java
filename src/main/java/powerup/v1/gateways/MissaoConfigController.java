@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import powerup.v1.dtos.request.MissaoConfigDto;
+import powerup.v1.dtos.request.MissaoConfigRequestDto;
 import powerup.v1.entities.MissaoConfig;
 import powerup.v1.usecases.MissaoConfigService;
 
@@ -19,26 +19,26 @@ public class MissaoConfigController {
 
     private final MissaoConfigService missaoConfigService;
     @PostMapping
-    public ResponseEntity<MissaoConfigDto> create(@RequestBody MissaoConfig missaoConfig) {
-        MissaoConfigDto createdMissaoConfig = missaoConfigService.create(missaoConfig);
+    public ResponseEntity<MissaoConfigRequestDto> create(@RequestBody MissaoConfig missaoConfig) {
+        MissaoConfigRequestDto createdMissaoConfig = missaoConfigService.create(missaoConfig);
         return new ResponseEntity<>(createdMissaoConfig, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<List<MissaoConfigDto>> getAll() {
-        List<MissaoConfigDto> missaoConfigList = missaoConfigService.getAll();
+    public ResponseEntity<List<MissaoConfigRequestDto>> getAll() {
+        List<MissaoConfigRequestDto> missaoConfigList = missaoConfigService.getAll();
         return new ResponseEntity<>(missaoConfigList, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MissaoConfigDto> getById(@PathVariable Integer id) {
-        MissaoConfigDto missaoConfig = missaoConfigService.getById(id);
+    public ResponseEntity<MissaoConfigRequestDto> getById(@PathVariable Integer id) {
+        MissaoConfigRequestDto missaoConfig = missaoConfigService.getById(id);
         return new ResponseEntity<>(missaoConfig, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<MissaoConfigDto> update(@PathVariable Integer id, @RequestBody MissaoConfig missaoConfig) {
-        MissaoConfigDto updatedMissaoConfig = missaoConfigService.update(id, missaoConfig);
+    public ResponseEntity<MissaoConfigRequestDto> update(@PathVariable Integer id, @RequestBody MissaoConfig missaoConfig) {
+        MissaoConfigRequestDto updatedMissaoConfig = missaoConfigService.update(id, missaoConfig);
         return new ResponseEntity<>(updatedMissaoConfig, HttpStatus.OK);
     }
 

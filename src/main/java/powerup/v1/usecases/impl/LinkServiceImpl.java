@@ -2,7 +2,7 @@ package powerup.v1.usecases.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import powerup.v1.dtos.request.LinkDto;
+import powerup.v1.dtos.request.LinkRequestDto;
 import powerup.v1.entities.Link;
 import powerup.v1.repositories.LinkRepository;
 import powerup.v1.usecases.LinkService;
@@ -18,13 +18,13 @@ public class LinkServiceImpl implements LinkService {
 
 
     @Override
-    public LinkDto create(Link link) {
+    public LinkRequestDto create(Link link) {
         Link savedEntity = linkRepository.save(link);
         return mapToDTO(savedEntity);
     }
 
     @Override
-    public List<LinkDto> getAll() {
+    public List<LinkRequestDto> getAll() {
         return linkRepository.findAll()
                 .stream()
                 .map(this::mapToDTO)
@@ -32,14 +32,14 @@ public class LinkServiceImpl implements LinkService {
     }
 
     @Override
-    public LinkDto getById(Integer id) {
+    public LinkRequestDto getById(Integer id) {
         return linkRepository.findById(id)
                 .map(this::mapToDTO)
                 .orElseThrow(() -> new IdNotFoundException("Link not found with id: " + id));
     }
 
     @Override
-    public LinkDto update(Integer id, Link link) {
+    public LinkRequestDto update(Integer id, Link link) {
         if (!linkRepository.existsById(id)) {
             throw new IdNotFoundException("Link not found with id: " + id);
         }
@@ -56,8 +56,8 @@ public class LinkServiceImpl implements LinkService {
         linkRepository.deleteById(id);
     }
 
-    private LinkDto mapToDTO(Link link) {
-        return LinkDto.builder()
+    private LinkRequestDto mapToDTO(Link link) {
+        return LinkRequestDto.builder()
                 .id(link.getId())
                 .url(link.getUrl())
                 .descricao(link.getDescricao())

@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import powerup.v1.dtos.request.QuizDto;
+import powerup.v1.dtos.request.QuizRequestDto;
 import powerup.v1.entities.Quiz;
 import powerup.v1.usecases.QuizService;
 
@@ -20,26 +20,26 @@ public class QuizController {
     private final QuizService quizService;
 
     @PostMapping
-    public ResponseEntity<QuizDto> create(@RequestBody Quiz quiz) {
-        QuizDto createdQuiz = quizService.create(quiz);
+    public ResponseEntity<QuizRequestDto> create(@RequestBody Quiz quiz) {
+        QuizRequestDto createdQuiz = quizService.create(quiz);
         return new ResponseEntity<>(createdQuiz, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<List<QuizDto>> getAll() {
-        List<QuizDto> quizList = quizService.getAll();
+    public ResponseEntity<List<QuizRequestDto>> getAll() {
+        List<QuizRequestDto> quizList = quizService.getAll();
         return new ResponseEntity<>(quizList, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<QuizDto> getById(@PathVariable Integer id) {
-        QuizDto quiz = quizService.getById(id);
+    public ResponseEntity<QuizRequestDto> getById(@PathVariable Integer id) {
+        QuizRequestDto quiz = quizService.getById(id);
         return new ResponseEntity<>(quiz, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<QuizDto> update(@PathVariable Integer id, @RequestBody Quiz quiz) {
-        QuizDto updatedQuiz = quizService.update(id, quiz);
+    public ResponseEntity<QuizRequestDto> update(@PathVariable Integer id, @RequestBody Quiz quiz) {
+        QuizRequestDto updatedQuiz = quizService.update(id, quiz);
         return new ResponseEntity<>(updatedQuiz, HttpStatus.OK);
     }
 

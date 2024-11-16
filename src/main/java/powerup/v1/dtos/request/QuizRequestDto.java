@@ -1,10 +1,9 @@
 package powerup.v1.dtos.request;
 
 import lombok.Builder;
-import lombok.Data;
 
 @Builder
-public record QuizDto(
+public record QuizRequestDto(
         Integer id,
         String nome,
         String descricao,

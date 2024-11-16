@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import powerup.v1.dtos.request.RankingDto;
+import powerup.v1.dtos.request.RankingRequestDto;
 import powerup.v1.entities.Ranking;
 import powerup.v1.usecases.RankingService;
 
@@ -20,26 +20,26 @@ public class RankingController {
     private final RankingService rankingService;
 
     @PostMapping
-    public ResponseEntity<RankingDto> create(@RequestBody Ranking ranking) {
-        RankingDto createdRanking = rankingService.create(ranking);
+    public ResponseEntity<RankingRequestDto> create(@RequestBody Ranking ranking) {
+        RankingRequestDto createdRanking = rankingService.create(ranking);
         return new ResponseEntity<>(createdRanking, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<List<RankingDto>> getAll() {
-        List<RankingDto> rankingList = rankingService.getAll();
+    public ResponseEntity<List<RankingRequestDto>> getAll() {
+        List<RankingRequestDto> rankingList = rankingService.getAll();
         return new ResponseEntity<>(rankingList, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RankingDto> getById(@PathVariable Integer id) {
-        RankingDto ranking = rankingService.getById(id);
+    public ResponseEntity<RankingRequestDto> getById(@PathVariable Integer id) {
+        RankingRequestDto ranking = rankingService.getById(id);
         return new ResponseEntity<>(ranking, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RankingDto> update(@PathVariable Integer id, @RequestBody Ranking ranking) {
-        RankingDto updatedRanking = rankingService.update(id, ranking);
+    public ResponseEntity<RankingRequestDto> update(@PathVariable Integer id, @RequestBody Ranking ranking) {
+        RankingRequestDto updatedRanking = rankingService.update(id, ranking);
         return new ResponseEntity<>(updatedRanking, HttpStatus.OK);
     }
 

@@ -3,11 +3,11 @@ package powerup.v1.dtos.request;
 import lombok.Builder;
 
 @Builder
-public record EmblemaConfigDto(
+public record AlternativaRequestDto(
         Integer id,
-        String nome,
         String descricao,
-        Integer emblemaTipo,
-        Integer quiz
+        // TODO: REVIEW
+        Boolean eCorreta,
+        Integer pergunta
 ) {
 }

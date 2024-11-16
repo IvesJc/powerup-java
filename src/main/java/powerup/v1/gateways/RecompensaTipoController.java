@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import powerup.v1.dtos.request.RecompensaTipoDto;
+import powerup.v1.dtos.request.RecompensaTipoRequestDto;
 import powerup.v1.entities.RecompensaTipo;
 import powerup.v1.usecases.RecompensaTipoService;
 
@@ -20,26 +20,26 @@ public class RecompensaTipoController {
     private final RecompensaTipoService recompensaTipoService;
 
     @PostMapping
-    public ResponseEntity<RecompensaTipoDto> create(@RequestBody RecompensaTipo recompensaTipo) {
-        RecompensaTipoDto createdRecompensaTipo = recompensaTipoService.create(recompensaTipo);
+    public ResponseEntity<RecompensaTipoRequestDto> create(@RequestBody RecompensaTipo recompensaTipo) {
+        RecompensaTipoRequestDto createdRecompensaTipo = recompensaTipoService.create(recompensaTipo);
         return new ResponseEntity<>(createdRecompensaTipo, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<List<RecompensaTipoDto>> getAll() {
-        List<RecompensaTipoDto> recompensaTipoList = recompensaTipoService.getAll();
+    public ResponseEntity<List<RecompensaTipoRequestDto>> getAll() {
+        List<RecompensaTipoRequestDto> recompensaTipoList = recompensaTipoService.getAll();
         return new ResponseEntity<>(recompensaTipoList, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RecompensaTipoDto> getById(@PathVariable Integer id) {
-        RecompensaTipoDto recompensaTipo = recompensaTipoService.getById(id);
+    public ResponseEntity<RecompensaTipoRequestDto> getById(@PathVariable Integer id) {
+        RecompensaTipoRequestDto recompensaTipo = recompensaTipoService.getById(id);
         return new ResponseEntity<>(recompensaTipo, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RecompensaTipoDto> update(@PathVariable Integer id, @RequestBody RecompensaTipo recompensaTipo) {
-        RecompensaTipoDto updatedRecompensaTipo = recompensaTipoService.update(id, recompensaTipo);
+    public ResponseEntity<RecompensaTipoRequestDto> update(@PathVariable Integer id, @RequestBody RecompensaTipo recompensaTipo) {
+        RecompensaTipoRequestDto updatedRecompensaTipo = recompensaTipoService.update(id, recompensaTipo);
         return new ResponseEntity<>(updatedRecompensaTipo, HttpStatus.OK);
     }
 

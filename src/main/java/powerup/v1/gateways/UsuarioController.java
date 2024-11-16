@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import powerup.v1.dtos.request.UsuarioDto;
+import powerup.v1.dtos.request.UsuarioRequestDto;
 import powerup.v1.entities.Usuario;
 import powerup.v1.usecases.UsuarioService;
 
@@ -20,26 +20,26 @@ public class UsuarioController {
     private final UsuarioService usuarioService;
 
     @PostMapping
-    public ResponseEntity<UsuarioDto> create(@RequestBody Usuario usuario) {
-        UsuarioDto createdUsuario = usuarioService.create(usuario);
+    public ResponseEntity<UsuarioRequestDto> create(@RequestBody Usuario usuario) {
+        UsuarioRequestDto createdUsuario = usuarioService.create(usuario);
         return new ResponseEntity<>(createdUsuario, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<List<UsuarioDto>> getAll() {
-        List<UsuarioDto> usuarioList = usuarioService.getAll();
+    public ResponseEntity<List<UsuarioRequestDto>> getAll() {
+        List<UsuarioRequestDto> usuarioList = usuarioService.getAll();
         return new ResponseEntity<>(usuarioList, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UsuarioDto> getById(@PathVariable Integer id) {
-        UsuarioDto usuario = usuarioService.getById(id);
+    public ResponseEntity<UsuarioRequestDto> getById(@PathVariable Integer id) {
+        UsuarioRequestDto usuario = usuarioService.getById(id);
         return new ResponseEntity<>(usuario, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UsuarioDto> update(@PathVariable Integer id, @RequestBody Usuario usuario) {
-        UsuarioDto updatedUsuario = usuarioService.update(id, usuario);
+    public ResponseEntity<UsuarioRequestDto> update(@PathVariable Integer id, @RequestBody Usuario usuario) {
+        UsuarioRequestDto updatedUsuario = usuarioService.update(id, usuario);
         return new ResponseEntity<>(updatedUsuario, HttpStatus.OK);
     }
 

@@ -2,7 +2,7 @@ package powerup.v1.usecases.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import powerup.v1.dtos.request.AlternativaDto;
+import powerup.v1.dtos.request.AlternativaRequestDto;
 import powerup.v1.entities.Alternativa;
 import powerup.v1.repositories.AlternativaRepository;
 import powerup.v1.usecases.AlternativaService;
@@ -17,13 +17,13 @@ public class AlternativaServiceImpl implements AlternativaService {
     private final AlternativaRepository alternativaRepository;
 
     @Override
-    public AlternativaDto create(Alternativa alternativa) {
+    public AlternativaRequestDto create(Alternativa alternativa) {
         Alternativa savedEntity = alternativaRepository.save(alternativa);
         return mapToDTO(savedEntity);
     }
 
     @Override
-    public List<AlternativaDto> getAll() {
+    public List<AlternativaRequestDto> getAll() {
         return alternativaRepository.findAll()
                 .stream()
                 .map(this::mapToDTO)
@@ -31,14 +31,14 @@ public class AlternativaServiceImpl implements AlternativaService {
     }
 
     @Override
-    public AlternativaDto getById(Integer id) {
+    public AlternativaRequestDto getById(Integer id) {
         return alternativaRepository.findById(id)
                 .map(this::mapToDTO)
                 .orElseThrow(() -> new IdNotFoundException("Alternativa not found with id: " + id));
     }
 
     @Override
-    public AlternativaDto update(Integer id, Alternativa alternativa) {
+    public AlternativaRequestDto update(Integer id, Alternativa alternativa) {
         if (!alternativaRepository.existsById(id)) {
             throw new IdNotFoundException("Alternativa not found with id: " + id);
         }
@@ -55,8 +55,8 @@ public class AlternativaServiceImpl implements AlternativaService {
         alternativaRepository.deleteById(id);
     }
 
-    private AlternativaDto mapToDTO(Alternativa alternativa) {
-        return AlternativaDto.builder()
+    private AlternativaRequestDto mapToDTO(Alternativa alternativa) {
+        return AlternativaRequestDto.builder()
                 .id(alternativa.getId())
                 .pergunta(alternativa.getPergunta().getId())
                 .descricao(alternativa.getDescricao())

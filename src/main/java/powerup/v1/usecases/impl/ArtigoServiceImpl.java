@@ -2,7 +2,7 @@ package powerup.v1.usecases.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import powerup.v1.dtos.request.ArtigoDto;
+import powerup.v1.dtos.request.ArtigoRequestDto;
 import powerup.v1.entities.Artigo;
 import powerup.v1.repositories.ArtigoRepository;
 import powerup.v1.usecases.ArtigoService;
@@ -17,13 +17,13 @@ public class ArtigoServiceImpl implements ArtigoService {
     private final ArtigoRepository artigoRepository;
 
     @Override
-    public ArtigoDto create(Artigo artigo) {
+    public ArtigoRequestDto create(Artigo artigo) {
         Artigo savedEntity = artigoRepository.save(artigo);
         return mapToDTO(savedEntity);
     }
 
     @Override
-    public List<ArtigoDto> getAll() {
+    public List<ArtigoRequestDto> getAll() {
         return artigoRepository.findAll()
                 .stream()
                 .map(this::mapToDTO)
@@ -31,14 +31,14 @@ public class ArtigoServiceImpl implements ArtigoService {
     }
 
     @Override
-    public ArtigoDto getById(Integer id) {
+    public ArtigoRequestDto getById(Integer id) {
         return artigoRepository.findById(id)
                 .map(this::mapToDTO)
                 .orElseThrow(() -> new IdNotFoundException("Artigo not found with id: " + id));
     }
 
     @Override
-    public ArtigoDto update(Integer id, Artigo artigo) {
+    public ArtigoRequestDto update(Integer id, Artigo artigo) {
         if (!artigoRepository.existsById(id)) {
             throw new IdNotFoundException("Artigo not found with id: " + id);
         }
@@ -55,8 +55,8 @@ public class ArtigoServiceImpl implements ArtigoService {
         artigoRepository.deleteById(id);
     }
 
-    private ArtigoDto mapToDTO(Artigo artigo) {
-        return ArtigoDto.builder()
+    private ArtigoRequestDto mapToDTO(Artigo artigo) {
+        return ArtigoRequestDto.builder()
                 .id(artigo.getId())
                 .titulo(artigo.getTitulo())
                 .subtitulo(artigo.getSubtitulo())

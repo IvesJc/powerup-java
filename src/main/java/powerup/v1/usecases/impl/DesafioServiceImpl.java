@@ -2,7 +2,7 @@ package powerup.v1.usecases.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import powerup.v1.dtos.request.DesafioDto;
+import powerup.v1.dtos.request.DesafioRequestDto;
 import powerup.v1.entities.Desafio;
 import powerup.v1.repositories.DesafioRepository;
 import powerup.v1.usecases.DesafioService;
@@ -17,13 +17,13 @@ public class DesafioServiceImpl implements DesafioService {
     private final DesafioRepository desafioRepository;
 
     @Override
-    public DesafioDto create(Desafio desafio) {
+    public DesafioRequestDto create(Desafio desafio) {
         Desafio savedEntity = desafioRepository.save(desafio);
         return mapToDTO(savedEntity);
     }
 
     @Override
-    public List<DesafioDto> getAll() {
+    public List<DesafioRequestDto> getAll() {
         return desafioRepository.findAll()
                 .stream()
                 .map(this::mapToDTO)
@@ -31,14 +31,14 @@ public class DesafioServiceImpl implements DesafioService {
     }
 
     @Override
-    public DesafioDto getById(Integer id) {
+    public DesafioRequestDto getById(Integer id) {
         return desafioRepository.findById(id)
                 .map(this::mapToDTO)
                 .orElseThrow(() -> new IdNotFoundException("Desafio not found with id: " + id));
     }
 
     @Override
-    public DesafioDto update(Integer id, Desafio desafio) {
+    public DesafioRequestDto update(Integer id, Desafio desafio) {
         if (!desafioRepository.existsById(id)) {
             throw new IdNotFoundException("Desafio not found with id: " + id);
         }
@@ -55,8 +55,8 @@ public class DesafioServiceImpl implements DesafioService {
         desafioRepository.deleteById(id);
     }
 
-    private DesafioDto mapToDTO(Desafio desafio) {
-        return DesafioDto.builder()
+    private DesafioRequestDto mapToDTO(Desafio desafio) {
+        return DesafioRequestDto.builder()
                 .id(desafio.getId())
                 .nome(desafio.getNome())
                 .descricao(desafio.getDescricao())

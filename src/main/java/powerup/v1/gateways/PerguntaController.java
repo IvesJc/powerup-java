@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import powerup.v1.dtos.request.PerguntaDto;
+import powerup.v1.dtos.request.PerguntaRequestDto;
 import powerup.v1.entities.Pergunta;
 import powerup.v1.usecases.PerguntaService;
 
@@ -20,26 +20,26 @@ public class PerguntaController {
     private final PerguntaService perguntaService;
 
     @PostMapping
-    public ResponseEntity<PerguntaDto> create(@RequestBody Pergunta pergunta) {
-        PerguntaDto createdPergunta = perguntaService.create(pergunta);
+    public ResponseEntity<PerguntaRequestDto> create(@RequestBody Pergunta pergunta) {
+        PerguntaRequestDto createdPergunta = perguntaService.create(pergunta);
         return new ResponseEntity<>(createdPergunta, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<List<PerguntaDto>> getAll() {
-        List<PerguntaDto> perguntaList = perguntaService.getAll();
+    public ResponseEntity<List<PerguntaRequestDto>> getAll() {
+        List<PerguntaRequestDto> perguntaList = perguntaService.getAll();
         return new ResponseEntity<>(perguntaList, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PerguntaDto> getById(@PathVariable Integer id) {
-        PerguntaDto pergunta = perguntaService.getById(id);
+    public ResponseEntity<PerguntaRequestDto> getById(@PathVariable Integer id) {
+        PerguntaRequestDto pergunta = perguntaService.getById(id);
         return new ResponseEntity<>(pergunta, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PerguntaDto> update(@PathVariable Integer id, @RequestBody Pergunta pergunta) {
-        PerguntaDto updatedPergunta = perguntaService.update(id, pergunta);
+    public ResponseEntity<PerguntaRequestDto> update(@PathVariable Integer id, @RequestBody Pergunta pergunta) {
+        PerguntaRequestDto updatedPergunta = perguntaService.update(id, pergunta);
         return new ResponseEntity<>(updatedPergunta, HttpStatus.OK);
     }
 

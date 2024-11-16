@@ -2,7 +2,7 @@ package powerup.v1.usecases.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import powerup.v1.dtos.request.EmblemaDto;
+import powerup.v1.dtos.request.EmblemaRequestDto;
 import powerup.v1.entities.Emblema;
 import powerup.v1.repositories.EmblemaRepository;
 import powerup.v1.usecases.EmblemaService;
@@ -17,13 +17,13 @@ public class EmblemaServiceImpl implements EmblemaService {
     private final EmblemaRepository emblemaRepository;
 
     @Override
-    public EmblemaDto create(Emblema emblema) {
+    public EmblemaRequestDto create(Emblema emblema) {
         Emblema savedEntity = emblemaRepository.save(emblema);
         return mapToDTO(savedEntity);
     }
 
     @Override
-    public List<EmblemaDto> getAll() {
+    public List<EmblemaRequestDto> getAll() {
         return emblemaRepository.findAll()
                 .stream()
                 .map(this::mapToDTO)
@@ -31,14 +31,14 @@ public class EmblemaServiceImpl implements EmblemaService {
     }
 
     @Override
-    public EmblemaDto getById(Integer id) {
+    public EmblemaRequestDto getById(Integer id) {
         return emblemaRepository.findById(id)
                 .map(this::mapToDTO)
                 .orElseThrow(() -> new IdNotFoundException("Emblema not found with id: " + id));
     }
 
     @Override
-    public EmblemaDto update(Integer id, Emblema emblema) {
+    public EmblemaRequestDto update(Integer id, Emblema emblema) {
         if (!emblemaRepository.existsById(id)) {
             throw new IdNotFoundException("Emblema not found with id: " + id);
         }
@@ -55,8 +55,8 @@ public class EmblemaServiceImpl implements EmblemaService {
         emblemaRepository.deleteById(id);
     }
 
-    private EmblemaDto mapToDTO(Emblema emblema) {
-        return EmblemaDto.builder()
+    private EmblemaRequestDto mapToDTO(Emblema emblema) {
+        return EmblemaRequestDto.builder()
                 .id(emblema.getId())
                 .usuario(emblema.getUsuarioId().getId())
                 .emblemaConfig(emblema.getId())

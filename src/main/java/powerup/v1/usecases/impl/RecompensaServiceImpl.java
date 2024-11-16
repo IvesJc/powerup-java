@@ -2,7 +2,7 @@ package powerup.v1.usecases.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import powerup.v1.dtos.request.RecompensaDto;
+import powerup.v1.dtos.request.RecompensaRequestDto;
 import powerup.v1.entities.Recompensa;
 import powerup.v1.repositories.RecompensaRepository;
 import powerup.v1.usecases.RecompensaService;
@@ -17,13 +17,13 @@ public class RecompensaServiceImpl implements RecompensaService {
     private final RecompensaRepository recompensaRepository;
 
     @Override
-    public RecompensaDto create(Recompensa recompensa) {
+    public RecompensaRequestDto create(Recompensa recompensa) {
         Recompensa savedEntity = recompensaRepository.save(recompensa);
         return mapToDTO(savedEntity);
     }
 
     @Override
-    public List<RecompensaDto> getAll() {
+    public List<RecompensaRequestDto> getAll() {
         return recompensaRepository.findAll()
                 .stream()
                 .map(this::mapToDTO)
@@ -31,14 +31,14 @@ public class RecompensaServiceImpl implements RecompensaService {
     }
 
     @Override
-    public RecompensaDto getById(Integer id) {
+    public RecompensaRequestDto getById(Integer id) {
         return recompensaRepository.findById(id)
                 .map(this::mapToDTO)
                 .orElseThrow(() -> new IdNotFoundException("Recompensa not found with id: " + id));
     }
 
     @Override
-    public RecompensaDto update(Integer id, Recompensa recompensa) {
+    public RecompensaRequestDto update(Integer id, Recompensa recompensa) {
         if (!recompensaRepository.existsById(id)) {
             throw new IdNotFoundException("Recompensa not found with id: " + id);
         }
@@ -55,8 +55,8 @@ public class RecompensaServiceImpl implements RecompensaService {
         recompensaRepository.deleteById(id);
     }
 
-    private RecompensaDto mapToDTO(Recompensa recompensa) {
-        return RecompensaDto.builder()
+    private RecompensaRequestDto mapToDTO(Recompensa recompensa) {
+        return RecompensaRequestDto.builder()
                 .id(recompensa.getId())
                 .pontosUtilizados(recompensa.getPontosUtilizados())
                 .usuario(recompensa.getUsuario().getId())

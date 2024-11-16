@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import powerup.v1.dtos.request.DesafioDto;
+import powerup.v1.dtos.request.DesafioRequestDto;
 import powerup.v1.entities.Desafio;
 import powerup.v1.usecases.DesafioService;
 
@@ -21,29 +21,29 @@ public class DesafioController {
 
     // Endpoint para criar um desafio
     @PostMapping
-    public ResponseEntity<DesafioDto> create(@RequestBody Desafio desafio) {
-        DesafioDto createdDesafio = desafioService.create(desafio);
+    public ResponseEntity<DesafioRequestDto> create(@RequestBody Desafio desafio) {
+        DesafioRequestDto createdDesafio = desafioService.create(desafio);
         return new ResponseEntity<>(createdDesafio, HttpStatus.CREATED);
     }
 
     // Endpoint para obter todos os desafios
     @GetMapping
-    public ResponseEntity<List<DesafioDto>> getAll() {
-        List<DesafioDto> desafioList = desafioService.getAll();
+    public ResponseEntity<List<DesafioRequestDto>> getAll() {
+        List<DesafioRequestDto> desafioList = desafioService.getAll();
         return new ResponseEntity<>(desafioList, HttpStatus.OK);
     }
 
     // Endpoint para obter um desafio por ID
     @GetMapping("/{id}")
-    public ResponseEntity<DesafioDto> getById(@PathVariable Integer id) {
-        DesafioDto desafio = desafioService.getById(id);
+    public ResponseEntity<DesafioRequestDto> getById(@PathVariable Integer id) {
+        DesafioRequestDto desafio = desafioService.getById(id);
         return new ResponseEntity<>(desafio, HttpStatus.OK);
     }
 
     // Endpoint para atualizar um desafio
     @PutMapping("/{id}")
-    public ResponseEntity<DesafioDto> update(@PathVariable Integer id, @RequestBody Desafio desafio) {
-        DesafioDto updatedDesafio = desafioService.update(id, desafio);
+    public ResponseEntity<DesafioRequestDto> update(@PathVariable Integer id, @RequestBody Desafio desafio) {
+        DesafioRequestDto updatedDesafio = desafioService.update(id, desafio);
         return new ResponseEntity<>(updatedDesafio, HttpStatus.OK);
     }
 

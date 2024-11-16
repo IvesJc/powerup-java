@@ -3,9 +3,10 @@ package powerup.v1.dtos.request;
 import lombok.Builder;
 
 @Builder
-public record RecompensaTipoDto(
+public record RecompensaConfigRequestDto(
         Integer id,
         String nome,
-        String descricao
+        Integer custoPontos,
+        Integer recompensaTipo
 ) {
 }
