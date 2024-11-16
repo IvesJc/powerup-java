@@ -3,9 +3,11 @@ package powerup.v1.dtos.response;
 import lombok.Builder;
 
 @Builder
-public record RecompensaTipoDto(
+public record DesafioResponseDto(
         Integer id,
         String nome,
-        String descricao
+        String descricao,
+        Integer thumbLink,
+        Integer quiz
 ) {
 }

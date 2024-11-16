@@ -3,10 +3,11 @@ package powerup.v1.dtos.response;
 import lombok.Builder;
 
 @Builder
-public record PerguntaDto(
-        Integer id,
+public record ArtigoResponseDto(
         String titulo,
+        String subtitulo,
         String conteudo,
-        Integer quiz
+        Integer thumbLink,
+        Integer moduloEducativo
 ) {
 }

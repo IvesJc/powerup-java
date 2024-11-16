@@ -3,8 +3,7 @@ package powerup.v1.dtos.response;
 import lombok.Builder;
 
 @Builder
-public record ModuloEducativoDto(
-        Integer id,
+public record ModuloEducativoResponseDto(
         String titulo,
         String subtitulo,
         String descricao,

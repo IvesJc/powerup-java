@@ -3,11 +3,11 @@ package powerup.v1.dtos.response;
 import lombok.Builder;
 
 @Builder
-public record EmblemaConfigDto(
-        Integer id,
+public record QuizResponseDto(
         String nome,
         String descricao,
-        Integer emblemaTipo,
-        Integer quiz
+        String categoria,
+        Integer notaMinima,
+        Integer moduloEducativo
 ) {
 }

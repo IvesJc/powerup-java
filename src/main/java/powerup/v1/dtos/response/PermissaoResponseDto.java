@@ -3,9 +3,8 @@ package powerup.v1.dtos.response;
 import lombok.Builder;
 
 @Builder
-public record EmblemaTipoDto(
-        Integer id,
+public record PermissaoResponseDto(
         String nome,
-        Integer imageLink
+        String descricao
 ) {
 }

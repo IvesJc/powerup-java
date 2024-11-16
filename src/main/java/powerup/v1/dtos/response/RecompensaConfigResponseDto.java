@@ -3,8 +3,7 @@ package powerup.v1.dtos.response;
 import lombok.Builder;
 
 @Builder
-public record RecompensaConfigDto(
-        Integer id,
+public record RecompensaConfigResponseDto(
         String nome,
         Integer custoPontos,
         Integer recompensaTipo

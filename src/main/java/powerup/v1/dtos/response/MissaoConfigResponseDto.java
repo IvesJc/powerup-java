@@ -3,8 +3,7 @@ package powerup.v1.dtos.response;
 import lombok.Builder;
 
 @Builder
-public record MissaoConfigDto(
-        Integer id,
+public record MissaoConfigResponseDto(
         String nome,
         String descricao,
         Integer pontos,

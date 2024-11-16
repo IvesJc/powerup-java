@@ -3,10 +3,8 @@ package powerup.v1.dtos.response;
 import lombok.Builder;
 
 @Builder
-public record AlternativaDto(
-        Integer id,
+public record AlternativaResponseDto(
         String descricao,
-        // TODO: REVIEW
         Boolean eCorreta,
         Integer pergunta
 ) {

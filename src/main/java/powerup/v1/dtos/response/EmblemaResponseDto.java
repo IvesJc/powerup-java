@@ -3,8 +3,7 @@ package powerup.v1.dtos.response;
 import lombok.Builder;
 
 @Builder
-public record EmblemaDto(
-        Integer id,
+public record EmblemaResponseDto(
         Integer usuario,
         Integer emblemaConfig
 ) {

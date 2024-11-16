@@ -3,8 +3,7 @@ package powerup.v1.dtos.response;
 import lombok.Builder;
 
 @Builder
-public record LinkDto(
-        Integer id,
+public record LinkResponseDto(
         String url,
         String descricao
 ) {
