@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import powerup.v1.dtos.request.PermissaoRequestDto;
+import powerup.v1.dtos.response.PermissaoResponseDto;
 import powerup.v1.entities.Permissao;
 import powerup.v1.usecases.PermissaoService;
 
@@ -20,7 +21,7 @@ public class PermissaoController {
     private final PermissaoService permissaoService;
 
     @PostMapping
-    public ResponseEntity<PermissaoRequestDto> create(@RequestBody Permissao permissao) {
+    public ResponseEntity<PermissaoRequestDto> create(@RequestBody PermissaoResponseDto permissao) {
         PermissaoRequestDto createdPermissao = permissaoService.create(permissao);
         return new ResponseEntity<>(createdPermissao, HttpStatus.CREATED);
     }
@@ -38,7 +39,7 @@ public class PermissaoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PermissaoRequestDto> update(@PathVariable Integer id, @RequestBody Permissao permissao) {
+    public ResponseEntity<PermissaoRequestDto> update(@PathVariable Integer id, @RequestBody PermissaoResponseDto permissao) {
         PermissaoRequestDto updatedPermissao = permissaoService.update(id, permissao);
         return new ResponseEntity<>(updatedPermissao, HttpStatus.OK);
     }
