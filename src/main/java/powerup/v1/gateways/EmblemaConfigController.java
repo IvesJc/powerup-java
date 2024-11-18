@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import powerup.v1.dtos.request.EmblemaConfigRequestDto;
+import powerup.v1.dtos.response.EmblemaConfigResponseDto;
 import powerup.v1.entities.EmblemaConfig;
 import powerup.v1.usecases.EmblemaConfigService;
 
@@ -20,7 +21,7 @@ public class EmblemaConfigController {
     private final EmblemaConfigService emblemaConfigService;
 
     @PostMapping
-    public ResponseEntity<EmblemaConfigRequestDto> create(@RequestBody EmblemaConfig emblemaConfig) {
+    public ResponseEntity<EmblemaConfigRequestDto> create(@RequestBody EmblemaConfigResponseDto emblemaConfig) {
         EmblemaConfigRequestDto createdEmblemaConfig = emblemaConfigService.create(emblemaConfig);
         return new ResponseEntity<>(createdEmblemaConfig, HttpStatus.CREATED);
     }
@@ -38,7 +39,7 @@ public class EmblemaConfigController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<EmblemaConfigRequestDto> update(@PathVariable Integer id, @RequestBody EmblemaConfig emblemaConfig) {
+    public ResponseEntity<EmblemaConfigRequestDto> update(@PathVariable Integer id, @RequestBody EmblemaConfigResponseDto emblemaConfig) {
         EmblemaConfigRequestDto updatedEmblemaConfig = emblemaConfigService.update(id, emblemaConfig);
         return new ResponseEntity<>(updatedEmblemaConfig, HttpStatus.OK);
     }
