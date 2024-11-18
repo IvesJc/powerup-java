@@ -3,6 +3,7 @@ package powerup.v1.usecases.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import powerup.v1.dtos.request.AlternativaRequestDto;
+import powerup.v1.dtos.response.AlternativaResponseDto;
 import powerup.v1.entities.Alternativa;
 import powerup.v1.repositories.AlternativaRepository;
 import powerup.v1.usecases.AlternativaService;
@@ -17,7 +18,12 @@ public class AlternativaServiceImpl implements AlternativaService {
     private final AlternativaRepository alternativaRepository;
 
     @Override
-    public AlternativaRequestDto create(Alternativa alternativa) {
+    public AlternativaRequestDto create(AlternativaResponseDto alternativa) {
+        // TODO: RESPONSE DTO
+        Alternativa newAlternativa = new Alternativa();
+        newAlternativa.setDescricao(alternativa.descricao());
+        newAlternativa.setPergunta(alternativa.pergunta());
+        AlternativaResponseDto.builder().descricao(newAlternativa.getDescricao()).eCorreta(newAlternativa.getECorreta()).pergunta(newAlternativa.getPergunta().getId()).build();
         Alternativa savedEntity = alternativaRepository.save(alternativa);
         return mapToDTO(savedEntity);
     }
@@ -38,7 +44,7 @@ public class AlternativaServiceImpl implements AlternativaService {
     }
 
     @Override
-    public AlternativaRequestDto update(Integer id, Alternativa alternativa) {
+    public AlternativaRequestDto update(Integer id, AlternativaResponseDto alternativa) {
         if (!alternativaRepository.existsById(id)) {
             throw new IdNotFoundException("Alternativa not found with id: " + id);
         }
