@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import powerup.v1.dtos.request.RankingRequestDto;
+import powerup.v1.dtos.response.RankingResponseDto;
 import powerup.v1.entities.Ranking;
 import powerup.v1.usecases.RankingService;
 
@@ -20,7 +21,7 @@ public class RankingController {
     private final RankingService rankingService;
 
     @PostMapping
-    public ResponseEntity<RankingRequestDto> create(@RequestBody Ranking ranking) {
+    public ResponseEntity<RankingRequestDto> create(@RequestBody RankingResponseDto ranking) {
         RankingRequestDto createdRanking = rankingService.create(ranking);
         return new ResponseEntity<>(createdRanking, HttpStatus.CREATED);
     }
@@ -38,7 +39,7 @@ public class RankingController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RankingRequestDto> update(@PathVariable Integer id, @RequestBody Ranking ranking) {
+    public ResponseEntity<RankingRequestDto> update(@PathVariable Integer id, @RequestBody RankingResponseDto ranking) {
         RankingRequestDto updatedRanking = rankingService.update(id, ranking);
         return new ResponseEntity<>(updatedRanking, HttpStatus.OK);
     }
