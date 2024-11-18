@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import powerup.v1.dtos.request.ArtigoRequestDto;
+import powerup.v1.dtos.response.ArtigoResponseDto;
 import powerup.v1.entities.Artigo;
 import powerup.v1.usecases.ArtigoService;
 
@@ -20,7 +21,7 @@ public class ArtigoController {
     private final ArtigoService artigoService;
     // Endpoint para criar um artigo
     @PostMapping
-    public ResponseEntity<ArtigoRequestDto> create(@RequestBody Artigo artigo) {
+    public ResponseEntity<ArtigoRequestDto> create(@RequestBody ArtigoResponseDto artigo) {
         ArtigoRequestDto createdArtigo = artigoService.create(artigo);
         return new ResponseEntity<>(createdArtigo, HttpStatus.CREATED);
     }
@@ -41,7 +42,7 @@ public class ArtigoController {
 
     // Endpoint para atualizar um artigo
     @PutMapping("/{id}")
-    public ResponseEntity<ArtigoRequestDto> update(@PathVariable Integer id, @RequestBody Artigo artigo) {
+    public ResponseEntity<ArtigoRequestDto> update(@PathVariable Integer id, @RequestBody ArtigoResponseDto artigo) {
         ArtigoRequestDto updatedArtigo = artigoService.update(id, artigo);
         return new ResponseEntity<>(updatedArtigo, HttpStatus.OK);
     }

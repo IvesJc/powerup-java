@@ -3,8 +3,13 @@ package powerup.v1.usecases.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import powerup.v1.dtos.request.ArtigoRequestDto;
+import powerup.v1.dtos.response.ArtigoResponseDto;
 import powerup.v1.entities.Artigo;
+import powerup.v1.entities.Link;
+import powerup.v1.entities.ModuloEducativo;
 import powerup.v1.repositories.ArtigoRepository;
+import powerup.v1.repositories.LinkRepository;
+import powerup.v1.repositories.ModuloEducativoRepository;
 import powerup.v1.usecases.ArtigoService;
 import powerup.v1.usecases.exception.IdNotFoundException;
 
@@ -15,11 +20,25 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ArtigoServiceImpl implements ArtigoService {
     private final ArtigoRepository artigoRepository;
+    private final LinkRepository linkRepository;
+    private final ModuloEducativoRepository moduloEducativoRepository;
 
     @Override
-    public ArtigoRequestDto create(Artigo artigo) {
-        Artigo savedEntity = artigoRepository.save(artigo);
-        return mapToDTO(savedEntity);
+    public ArtigoRequestDto create(ArtigoResponseDto artigo) {
+
+        Link link = linkRepository.findById(artigo.thumbLink()).orElseThrow(() -> new IdNotFoundException("Link not found with id: " + artigo.thumbLink()));
+
+        ModuloEducativo moduloEducativo = moduloEducativoRepository.findById(artigo.moduloEducativo()).orElseThrow(() -> new IdNotFoundException("Educativo not found with id: " + artigo.moduloEducativo()));
+
+        Artigo newArtigo = Artigo.builder()
+                .titulo(artigo.titulo())
+                .subtitulo(artigo.subtitulo())
+                .conteudo(artigo.conteudo())
+                .thumbLink(link)
+                .moduloEducativoId(moduloEducativo).build();
+
+        artigoRepository.save(newArtigo);
+        return mapToDTO(newArtigo);
     }
 
     @Override
@@ -38,13 +57,22 @@ public class ArtigoServiceImpl implements ArtigoService {
     }
 
     @Override
-    public ArtigoRequestDto update(Integer id, Artigo artigo) {
-        if (!artigoRepository.existsById(id)) {
-            throw new IdNotFoundException("Artigo not found with id: " + id);
-        }
-        artigo.setId(id);
-        Artigo updatedEntity = artigoRepository.save(artigo);
-        return mapToDTO(updatedEntity);
+    public ArtigoRequestDto update(Integer id, ArtigoResponseDto artigo) {
+
+        Artigo updatedArtigo = artigoRepository.findById(id).orElseThrow(() -> new IdNotFoundException("Artigo not found with id: " + id));
+
+        Link link = linkRepository.findById(artigo.thumbLink()).orElseThrow(() -> new IdNotFoundException("Link not found with id: " + artigo.thumbLink()));
+
+        ModuloEducativo moduloEducativo = moduloEducativoRepository.findById(artigo.moduloEducativo()).orElseThrow(() -> new IdNotFoundException("Educativo not found with id: " + artigo.moduloEducativo()));
+
+        updatedArtigo.setTitulo(artigo.titulo());
+        updatedArtigo.setSubtitulo(artigo.subtitulo());
+        updatedArtigo.setConteudo(artigo.conteudo());
+        updatedArtigo.setThumbLink(link);
+        updatedArtigo.setModuloEducativoId(moduloEducativo);
+
+        artigoRepository.save(updatedArtigo);
+        return mapToDTO(updatedArtigo);
     }
 
     @Override
