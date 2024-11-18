@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import powerup.v1.dtos.request.AlternativaRequestDto;
+import powerup.v1.dtos.response.AlternativaResponseDto;
 import powerup.v1.entities.Alternativa;
 import powerup.v1.usecases.impl.AlternativaServiceImpl;
 
@@ -21,7 +22,7 @@ public class AlternativaController {
 
     // Endpoint para criar uma alternativa
     @PostMapping
-    public ResponseEntity<AlternativaRequestDto> create(@RequestBody Alternativa alternativa) {
+    public ResponseEntity<AlternativaRequestDto> create(@RequestBody AlternativaResponseDto alternativa) {
         AlternativaRequestDto createdAlternativa = alternativaService.create(alternativa);
         return new ResponseEntity<>(createdAlternativa, HttpStatus.CREATED);
     }
@@ -42,7 +43,7 @@ public class AlternativaController {
 
     // Endpoint para atualizar uma alternativa
     @PutMapping("/{id}")
-    public ResponseEntity<AlternativaRequestDto> update(@PathVariable Integer id, @RequestBody Alternativa alternativa) {
+    public ResponseEntity<AlternativaRequestDto> update(@PathVariable Integer id, @RequestBody AlternativaResponseDto alternativa) {
         AlternativaRequestDto updatedAlternativa = alternativaService.update(id, alternativa);
         return ResponseEntity.ok(updatedAlternativa);
     }

@@ -5,7 +5,9 @@ import org.springframework.stereotype.Service;
 import powerup.v1.dtos.request.AlternativaRequestDto;
 import powerup.v1.dtos.response.AlternativaResponseDto;
 import powerup.v1.entities.Alternativa;
+import powerup.v1.entities.Pergunta;
 import powerup.v1.repositories.AlternativaRepository;
+import powerup.v1.repositories.PerguntaRepository;
 import powerup.v1.usecases.AlternativaService;
 import powerup.v1.usecases.exception.IdNotFoundException;
 
@@ -16,16 +18,22 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AlternativaServiceImpl implements AlternativaService {
     private final AlternativaRepository alternativaRepository;
+    private final PerguntaRepository perguntaRepository;
 
     @Override
-    public AlternativaRequestDto create(AlternativaResponseDto alternativa) {
-        // TODO: RESPONSE DTO
-        Alternativa newAlternativa = new Alternativa();
-        newAlternativa.setDescricao(alternativa.descricao());
-        newAlternativa.setPergunta(alternativa.pergunta());
-        AlternativaResponseDto.builder().descricao(newAlternativa.getDescricao()).eCorreta(newAlternativa.getECorreta()).pergunta(newAlternativa.getPergunta().getId()).build();
-        Alternativa savedEntity = alternativaRepository.save(alternativa);
-        return mapToDTO(savedEntity);
+    public AlternativaRequestDto create(AlternativaResponseDto alternativaResponseDto) {
+
+        Pergunta pergunta = perguntaRepository.findById(alternativaResponseDto.pergunta())
+                .orElseThrow(() -> new IdNotFoundException("Pergunta não encontrada com ID: " + alternativaResponseDto.pergunta()));
+
+        Alternativa newAlternativa = Alternativa.builder()
+                .descricao(alternativaResponseDto.descricao())
+                .eCorreta(alternativaResponseDto.eCorreta())
+                .pergunta(pergunta)
+                .build();
+
+        alternativaRepository.save(newAlternativa);
+        return mapToDTO(newAlternativa);
     }
 
     @Override
@@ -44,13 +52,19 @@ public class AlternativaServiceImpl implements AlternativaService {
     }
 
     @Override
-    public AlternativaRequestDto update(Integer id, AlternativaResponseDto alternativa) {
-        if (!alternativaRepository.existsById(id)) {
-            throw new IdNotFoundException("Alternativa not found with id: " + id);
-        }
-        alternativa.setId(id);
-        Alternativa updatedEntity = alternativaRepository.save(alternativa);
-        return mapToDTO(updatedEntity);
+    public AlternativaRequestDto update(Integer id, AlternativaResponseDto alternativaResponseDto) {
+        Alternativa alternativaUpdate = alternativaRepository.findById(id).orElseThrow(() -> new IdNotFoundException("Alternativa not found with id: " + id));
+
+        Pergunta pergunta = perguntaRepository.findById(alternativaResponseDto.pergunta())
+                .orElseThrow(() -> new IdNotFoundException("Pergunta não encontrada com ID: " + alternativaResponseDto.pergunta()));
+
+        alternativaUpdate.setDescricao(alternativaResponseDto.descricao());
+        alternativaUpdate.setECorreta(alternativaResponseDto.eCorreta());
+        alternativaUpdate.setPergunta(pergunta);
+
+        alternativaRepository.save(alternativaUpdate);
+
+        return mapToDTO(alternativaUpdate);
     }
 
     @Override
