@@ -3,8 +3,13 @@ package powerup.v1.usecases.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import powerup.v1.dtos.request.RecompensaRequestDto;
+import powerup.v1.dtos.response.RecompensaResponseDto;
 import powerup.v1.entities.Recompensa;
+import powerup.v1.entities.RecompensaConfig;
+import powerup.v1.entities.Usuario;
+import powerup.v1.repositories.RecompensaConfigRepository;
 import powerup.v1.repositories.RecompensaRepository;
+import powerup.v1.repositories.UsuarioRepository;
 import powerup.v1.usecases.RecompensaService;
 import powerup.v1.usecases.exception.IdNotFoundException;
 
@@ -15,11 +20,23 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class RecompensaServiceImpl implements RecompensaService {
     private final RecompensaRepository recompensaRepository;
+    private final UsuarioRepository usuarioRepository;
+    private final RecompensaConfigRepository recompensaConfigRepository;
 
     @Override
-    public RecompensaRequestDto create(Recompensa recompensa) {
-        Recompensa savedEntity = recompensaRepository.save(recompensa);
-        return mapToDTO(savedEntity);
+    public RecompensaRequestDto create(RecompensaResponseDto recompensa) {
+
+        Usuario usuario = usuarioRepository.findById(recompensa.usuario()).orElseThrow(() -> new IdNotFoundException("Usuario not found with id: " + recompensa.usuario()));
+
+        RecompensaConfig recompensaConfig = recompensaConfigRepository.findById(recompensa.recompensaConfig()).orElseThrow(() -> new IdNotFoundException("Recompensa Config not found"));
+
+        Recompensa saveRecompensa = Recompensa.builder()
+                .pontosUtilizados(recompensa.pontosUtilizados())
+                .usuario(usuario)
+                .recompensaConfig(recompensaConfig).build();
+
+        recompensaRepository.save(saveRecompensa);
+        return mapToDTO(saveRecompensa);
     }
 
     @Override
@@ -38,13 +55,20 @@ public class RecompensaServiceImpl implements RecompensaService {
     }
 
     @Override
-    public RecompensaRequestDto update(Integer id, Recompensa recompensa) {
-        if (!recompensaRepository.existsById(id)) {
-            throw new IdNotFoundException("Recompensa not found with id: " + id);
-        }
-        recompensa.setId(id);
-        Recompensa updatedEntity = recompensaRepository.save(recompensa);
-        return mapToDTO(updatedEntity);
+    public RecompensaRequestDto update(Integer id, RecompensaResponseDto recompensa) {
+
+        Usuario usuario = usuarioRepository.findById(recompensa.usuario()).orElseThrow(() -> new IdNotFoundException("Usuario not found with id: " + recompensa.usuario()));
+
+        RecompensaConfig recompensaConfig = recompensaConfigRepository.findById(recompensa.recompensaConfig()).orElseThrow(() -> new IdNotFoundException("Recompensa Config not found"));
+
+        Recompensa updateRecompensa = recompensaRepository.findById(id).orElseThrow(() -> new IdNotFoundException("Recompensa not found with id: " + id));
+
+        updateRecompensa.setPontosUtilizados(recompensa.pontosUtilizados());
+        updateRecompensa.setUsuario(usuario);
+        updateRecompensa.setRecompensaConfig(recompensaConfig);
+
+        recompensaRepository.save(updateRecompensa);
+        return mapToDTO(updateRecompensa);
     }
 
     @Override
