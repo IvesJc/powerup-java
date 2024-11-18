@@ -3,8 +3,14 @@ package powerup.v1.usecases.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import powerup.v1.dtos.request.DesafioRequestDto;
+import powerup.v1.dtos.response.DesafioResponseDto;
+import powerup.v1.entities.Artigo;
 import powerup.v1.entities.Desafio;
+import powerup.v1.entities.Link;
+import powerup.v1.entities.Quiz;
 import powerup.v1.repositories.DesafioRepository;
+import powerup.v1.repositories.LinkRepository;
+import powerup.v1.repositories.QuizRepository;
 import powerup.v1.usecases.DesafioService;
 import powerup.v1.usecases.exception.IdNotFoundException;
 
@@ -15,11 +21,24 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class DesafioServiceImpl implements DesafioService {
     private final DesafioRepository desafioRepository;
+    private final LinkRepository linkRepository;
+    private final QuizRepository quizRepository;
 
     @Override
-    public DesafioRequestDto create(Desafio desafio) {
-        Desafio savedEntity = desafioRepository.save(desafio);
-        return mapToDTO(savedEntity);
+    public DesafioRequestDto create(DesafioResponseDto desafio) {
+
+        Link link = linkRepository.findById(desafio.thumbLink()).orElseThrow(() -> new IdNotFoundException("Link not found with id: " + desafio.thumbLink()));
+
+        Quiz quiz = quizRepository.findById(desafio.quiz()).orElseThrow(() -> new IdNotFoundException("Quiz not found with id: " + desafio.quiz()));
+
+        Desafio newDesafio = Desafio.builder()
+                .nome(desafio.nome())
+                .descricao(desafio.descricao())
+                .thumbLink(link)
+                .quiz(quiz).build();
+
+        desafioRepository.save(newDesafio);
+        return mapToDTO(newDesafio);
     }
 
     @Override
@@ -38,13 +57,21 @@ public class DesafioServiceImpl implements DesafioService {
     }
 
     @Override
-    public DesafioRequestDto update(Integer id, Desafio desafio) {
-        if (!desafioRepository.existsById(id)) {
-            throw new IdNotFoundException("Desafio not found with id: " + id);
-        }
-        desafio.setId(id);
-        Desafio updatedEntity = desafioRepository.save(desafio);
-        return mapToDTO(updatedEntity);
+    public DesafioRequestDto update(Integer id, DesafioResponseDto desafio) {
+
+        Desafio updateDesafio = desafioRepository.findById(id).orElseThrow(() -> new IdNotFoundException("Desafio not found with id: " + id));
+
+        Link link = linkRepository.findById(desafio.thumbLink()).orElseThrow(() -> new IdNotFoundException("Link not found with id: " + desafio.thumbLink()));
+
+        Quiz quiz = quizRepository.findById(desafio.quiz()).orElseThrow(() -> new IdNotFoundException("Quiz not found with id: " + desafio.quiz()));
+
+        updateDesafio.setNome(desafio.nome());
+        updateDesafio.setDescricao(desafio.descricao());
+        updateDesafio.setThumbLink(link);
+        updateDesafio.setQuiz(quiz);
+
+        desafioRepository.save(updateDesafio);
+        return mapToDTO(updateDesafio);
     }
 
     @Override

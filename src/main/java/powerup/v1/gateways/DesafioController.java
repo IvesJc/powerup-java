@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import powerup.v1.dtos.request.DesafioRequestDto;
+import powerup.v1.dtos.response.DesafioResponseDto;
 import powerup.v1.entities.Desafio;
 import powerup.v1.usecases.DesafioService;
 
@@ -21,7 +22,7 @@ public class DesafioController {
 
     // Endpoint para criar um desafio
     @PostMapping
-    public ResponseEntity<DesafioRequestDto> create(@RequestBody Desafio desafio) {
+    public ResponseEntity<DesafioRequestDto> create(@RequestBody DesafioResponseDto desafio) {
         DesafioRequestDto createdDesafio = desafioService.create(desafio);
         return new ResponseEntity<>(createdDesafio, HttpStatus.CREATED);
     }
@@ -42,7 +43,7 @@ public class DesafioController {
 
     // Endpoint para atualizar um desafio
     @PutMapping("/{id}")
-    public ResponseEntity<DesafioRequestDto> update(@PathVariable Integer id, @RequestBody Desafio desafio) {
+    public ResponseEntity<DesafioRequestDto> update(@PathVariable Integer id, @RequestBody DesafioResponseDto desafio) {
         DesafioRequestDto updatedDesafio = desafioService.update(id, desafio);
         return new ResponseEntity<>(updatedDesafio, HttpStatus.OK);
     }
