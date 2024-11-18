@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import powerup.v1.dtos.request.UsuarioRequestDto;
+import powerup.v1.dtos.response.UsuarioResponseDto;
 import powerup.v1.entities.Usuario;
 import powerup.v1.usecases.UsuarioService;
 
@@ -20,7 +21,7 @@ public class UsuarioController {
     private final UsuarioService usuarioService;
 
     @PostMapping
-    public ResponseEntity<UsuarioRequestDto> create(@RequestBody Usuario usuario) {
+    public ResponseEntity<UsuarioRequestDto> create(@RequestBody UsuarioResponseDto usuario) {
         UsuarioRequestDto createdUsuario = usuarioService.create(usuario);
         return new ResponseEntity<>(createdUsuario, HttpStatus.CREATED);
     }
@@ -38,7 +39,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UsuarioRequestDto> update(@PathVariable Integer id, @RequestBody Usuario usuario) {
+    public ResponseEntity<UsuarioRequestDto> update(@PathVariable Integer id, @RequestBody UsuarioResponseDto usuario) {
         UsuarioRequestDto updatedUsuario = usuarioService.update(id, usuario);
         return new ResponseEntity<>(updatedUsuario, HttpStatus.OK);
     }

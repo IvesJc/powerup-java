@@ -3,7 +3,10 @@ package powerup.v1.usecases.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import powerup.v1.dtos.request.UsuarioRequestDto;
+import powerup.v1.dtos.response.UsuarioResponseDto;
+import powerup.v1.entities.Ranking;
 import powerup.v1.entities.Usuario;
+import powerup.v1.repositories.RankingRepository;
 import powerup.v1.repositories.UsuarioRepository;
 import powerup.v1.usecases.UsuarioService;
 import powerup.v1.usecases.exception.IdNotFoundException;
@@ -15,10 +18,20 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UsuarioServiceImpl implements UsuarioService {
     private final UsuarioRepository usuarioRepository;
+    private final RankingRepository rankingRepository;
 
     @Override
-    public UsuarioRequestDto create(Usuario usuario) {
-        Usuario savedEntity = usuarioRepository.save(usuario);
+    public UsuarioRequestDto create(UsuarioResponseDto usuario) {
+
+        Ranking ranking = rankingRepository.findById(usuario.ranking()).orElseThrow(() -> new IdNotFoundException("Ranking not found with id: " + usuario.ranking()));
+
+        Usuario savedEntity = Usuario.builder()
+                .nome(usuario.nome())
+                .firebaseUid(usuario.firebaseUid())
+                .email(usuario.email())
+                .ranking(ranking)
+                .build();
+        usuarioRepository.save(savedEntity);
         return mapToDTO(savedEntity);
     }
 
@@ -38,13 +51,18 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public UsuarioRequestDto update(Integer id, Usuario usuario) {
-        if (!usuarioRepository.existsById(id)) {
-            throw new IdNotFoundException("Usuario not found with id: " + id);
-        }
-        usuario.setId(id);
-        Usuario updatedEntity = usuarioRepository.save(usuario);
-        return mapToDTO(updatedEntity);
+    public UsuarioRequestDto update(Integer id, UsuarioResponseDto usuario) {
+        Ranking ranking = rankingRepository.findById(usuario.ranking()).orElseThrow(() -> new IdNotFoundException("Ranking not found with id: " + usuario.ranking()));
+
+        Usuario updateUsuario = usuarioRepository.findById(id).orElseThrow(() -> new IdNotFoundException("Usuario not found with id: " + id));
+
+        updateUsuario.setNome(usuario.nome());
+        updateUsuario.setEmail(usuario.email());
+        updateUsuario.setFirebaseUid(usuario.firebaseUid());
+        updateUsuario.setRanking(ranking);
+
+        usuarioRepository.save(updateUsuario);
+        return mapToDTO(updateUsuario);
     }
 
     @Override
