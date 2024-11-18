@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import powerup.v1.dtos.request.MissaoRequestDto;
+import powerup.v1.dtos.response.MissaoResponseDto;
 import powerup.v1.entities.Missao;
 import powerup.v1.usecases.impl.MissaoServiceImpl;
 
@@ -21,7 +22,7 @@ public class MissaoController {
 
     // Endpoint para criar uma missão
     @PostMapping
-    public ResponseEntity<MissaoRequestDto> create(@RequestBody Missao missao) {
+    public ResponseEntity<MissaoRequestDto> create(@RequestBody MissaoResponseDto missao) {
         MissaoRequestDto createdMissao = missaoService.create(missao);
         return new ResponseEntity<>(createdMissao, HttpStatus.CREATED);
     }
@@ -42,7 +43,7 @@ public class MissaoController {
 
     // Endpoint para atualizar uma missão
     @PutMapping("/{id}")
-    public ResponseEntity<MissaoRequestDto> update(@PathVariable Integer id, @RequestBody Missao missao) {
+    public ResponseEntity<MissaoRequestDto> update(@PathVariable Integer id, @RequestBody MissaoResponseDto missao) {
         MissaoRequestDto updatedMissao = missaoService.update(id, missao);
         return new ResponseEntity<>(updatedMissao, HttpStatus.OK);
     }
