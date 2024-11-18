@@ -3,6 +3,7 @@ package powerup.v1.usecases.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import powerup.v1.dtos.request.MissaoConfigRequestDto;
+import powerup.v1.dtos.response.MissaoConfigResponseDto;
 import powerup.v1.entities.MissaoConfig;
 import powerup.v1.repositories.MissaoConfigRepository;
 import powerup.v1.usecases.MissaoConfigService;
@@ -18,8 +19,12 @@ public class MissaoConfigServiceImpl implements MissaoConfigService {
 
 
     @Override
-    public MissaoConfigRequestDto create(MissaoConfig missaoConfig) {
-        MissaoConfig savedEntity = missaoConfigRepository.save(missaoConfig);
+    public MissaoConfigRequestDto create(MissaoConfigResponseDto missaoConfig) {
+        MissaoConfig savedEntity = MissaoConfig.builder()
+                .nome(missaoConfig.nome())
+                .descricao(missaoConfig.descricao())
+                .pontos(missaoConfig.pontos())
+                .frequenciaDias(missaoConfig.frequenciaDias()).build();
         return mapToDTO(savedEntity);
     }
 
@@ -39,13 +44,16 @@ public class MissaoConfigServiceImpl implements MissaoConfigService {
     }
 
     @Override
-    public MissaoConfigRequestDto update(Integer id, MissaoConfig missaoConfig) {
-        if (!missaoConfigRepository.existsById(id)) {
-            throw new IdNotFoundException("MissaoConfig not found with id: " + id);
-        }
-        missaoConfig.setId(id);
-        MissaoConfig updatedEntity = missaoConfigRepository.save(missaoConfig);
-        return mapToDTO(updatedEntity);
+    public MissaoConfigRequestDto update(Integer id, MissaoConfigResponseDto missaoConfig) {
+        MissaoConfig updateMissaoConfig = missaoConfigRepository.findById(id).orElseThrow(() -> new IdNotFoundException("MissaoConfig not found with id: " + id));
+
+        updateMissaoConfig.setNome(missaoConfig.nome());
+        updateMissaoConfig.setDescricao(missaoConfig.descricao());
+        updateMissaoConfig.setPontos(missaoConfig.pontos());
+        updateMissaoConfig.setFrequenciaDias(missaoConfig.frequenciaDias());
+
+        missaoConfigRepository.save(updateMissaoConfig);
+        return mapToDTO(updateMissaoConfig);
     }
 
     @Override
