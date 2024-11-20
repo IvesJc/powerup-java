@@ -3,6 +3,7 @@ package powerup.v1.usecases.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import powerup.v1.dtos.request.RecompensaTipoRequestDto;
+import powerup.v1.dtos.response.RecompensaTipoResponseDto;
 import powerup.v1.entities.RecompensaTipo;
 import powerup.v1.repositories.RecompensaTipoRepository;
 import powerup.v1.usecases.RecompensaTipoService;
@@ -18,8 +19,11 @@ public class RecompensaTipoServiceImpl implements RecompensaTipoService {
 
 
     @Override
-    public RecompensaTipoRequestDto create(RecompensaTipo recompensaTipo) {
-        RecompensaTipo savedEntity = recompensaTipoRepository.save(recompensaTipo);
+    public RecompensaTipoRequestDto create(RecompensaTipoResponseDto recompensaTipo) {
+        RecompensaTipo savedEntity = RecompensaTipo.builder()
+                .nome(recompensaTipo.nome())
+                .descricao(recompensaTipo.descricao()).build();
+        recompensaTipoRepository.save(savedEntity);
         return mapToDTO(savedEntity);
     }
 
@@ -39,13 +43,14 @@ public class RecompensaTipoServiceImpl implements RecompensaTipoService {
     }
 
     @Override
-    public RecompensaTipoRequestDto update(Integer id, RecompensaTipo recompensaTipo) {
-        if (!recompensaTipoRepository.existsById(id)) {
-            throw new IdNotFoundException("RecompensaTipo not found with id: " + id);
-        }
-        recompensaTipo.setId(id);
-        RecompensaTipo updatedEntity = recompensaTipoRepository.save(recompensaTipo);
-        return mapToDTO(updatedEntity);
+    public RecompensaTipoRequestDto update(Integer id, RecompensaTipoResponseDto recompensaTipo) {
+        RecompensaTipo updateRecompensaTipo = recompensaTipoRepository.findById(id).orElseThrow(() -> new IdNotFoundException("RecompensaTipo not found with id: " + id));
+
+        updateRecompensaTipo.setNome(recompensaTipo.nome());
+        updateRecompensaTipo.setDescricao(recompensaTipo.descricao());
+
+        recompensaTipoRepository.save(updateRecompensaTipo);
+        return mapToDTO(updateRecompensaTipo);
     }
 
     @Override

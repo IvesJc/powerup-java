@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import powerup.v1.dtos.request.LinkRequestDto;
+import powerup.v1.dtos.response.LinkResponseDto;
 import powerup.v1.entities.Link;
 import powerup.v1.usecases.LinkService;
 
@@ -20,7 +21,7 @@ public class LinkController {
     private final LinkService linkService;
 
     @PostMapping
-    public ResponseEntity<LinkRequestDto> create(@RequestBody Link link) {
+    public ResponseEntity<LinkRequestDto> create(@RequestBody LinkResponseDto link) {
         LinkRequestDto createdLink = linkService.create(link);
         return new ResponseEntity<>(createdLink, HttpStatus.CREATED);
     }
@@ -38,7 +39,7 @@ public class LinkController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<LinkRequestDto> update(@PathVariable Integer id, @RequestBody Link link) {
+    public ResponseEntity<LinkRequestDto> update(@PathVariable Integer id, @RequestBody LinkResponseDto link) {
         LinkRequestDto updatedLink = linkService.update(id, link);
         return new ResponseEntity<>(updatedLink, HttpStatus.OK);
     }
@@ -46,6 +47,6 @@ public class LinkController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         linkService.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResponseEntity.noContent().build();
     }
 }

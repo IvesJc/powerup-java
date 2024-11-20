@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import powerup.v1.dtos.request.RecompensaRequestDto;
+import powerup.v1.dtos.response.RecompensaResponseDto;
 import powerup.v1.entities.Recompensa;
 import powerup.v1.usecases.RecompensaService;
 
@@ -20,7 +21,7 @@ public class RecompensaController {
     private final RecompensaService recompensaService;
 
     @PostMapping
-    public ResponseEntity<RecompensaRequestDto> create(@RequestBody Recompensa recompensa) {
+    public ResponseEntity<RecompensaRequestDto> create(@RequestBody RecompensaResponseDto recompensa) {
         RecompensaRequestDto createdRecompensa = recompensaService.create(recompensa);
         return new ResponseEntity<>(createdRecompensa, HttpStatus.CREATED);
     }
@@ -38,7 +39,7 @@ public class RecompensaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RecompensaRequestDto> update(@PathVariable Integer id, @RequestBody Recompensa recompensa) {
+    public ResponseEntity<RecompensaRequestDto> update(@PathVariable Integer id, @RequestBody RecompensaResponseDto recompensa) {
         RecompensaRequestDto updatedRecompensa = recompensaService.update(id, recompensa);
         return new ResponseEntity<>(updatedRecompensa, HttpStatus.OK);
     }
@@ -46,6 +47,6 @@ public class RecompensaController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         recompensaService.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResponseEntity.noContent().build();
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import powerup.v1.dtos.request.EmblemaTipoRequestDto;
+import powerup.v1.dtos.response.EmblemaTipoResponseDto;
 import powerup.v1.entities.EmblemaTipo;
 import powerup.v1.usecases.EmblemaTipoService;
 
@@ -20,7 +21,7 @@ public class EmblemaTipoController {
     private final EmblemaTipoService emblemaTipoService;
     
     @PostMapping
-    public ResponseEntity<EmblemaTipoRequestDto> create(@RequestBody EmblemaTipo emblemaTipo) {
+    public ResponseEntity<EmblemaTipoRequestDto> create(@RequestBody EmblemaTipoResponseDto emblemaTipo) {
         EmblemaTipoRequestDto createdEmblemaTipo = emblemaTipoService.create(emblemaTipo);
         return new ResponseEntity<>(createdEmblemaTipo, HttpStatus.CREATED);
     }
@@ -38,7 +39,7 @@ public class EmblemaTipoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<EmblemaTipoRequestDto> update(@PathVariable Integer id, @RequestBody EmblemaTipo emblemaTipo) {
+    public ResponseEntity<EmblemaTipoRequestDto> update(@PathVariable Integer id, @RequestBody EmblemaTipoResponseDto emblemaTipo) {
         EmblemaTipoRequestDto updatedEmblemaTipo = emblemaTipoService.update(id, emblemaTipo);
         return new ResponseEntity<>(updatedEmblemaTipo, HttpStatus.OK);
     }
@@ -46,6 +47,6 @@ public class EmblemaTipoController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         emblemaTipoService.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResponseEntity.noContent().build();
     }
 }

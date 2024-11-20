@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import powerup.v1.dtos.request.QuizRequestDto;
+import powerup.v1.dtos.response.QuizResponseDto;
 import powerup.v1.entities.Quiz;
 import powerup.v1.usecases.QuizService;
 
@@ -20,7 +21,7 @@ public class QuizController {
     private final QuizService quizService;
 
     @PostMapping
-    public ResponseEntity<QuizRequestDto> create(@RequestBody Quiz quiz) {
+    public ResponseEntity<QuizRequestDto> create(@RequestBody QuizResponseDto quiz) {
         QuizRequestDto createdQuiz = quizService.create(quiz);
         return new ResponseEntity<>(createdQuiz, HttpStatus.CREATED);
     }
@@ -38,7 +39,7 @@ public class QuizController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<QuizRequestDto> update(@PathVariable Integer id, @RequestBody Quiz quiz) {
+    public ResponseEntity<QuizRequestDto> update(@PathVariable Integer id, @RequestBody QuizResponseDto quiz) {
         QuizRequestDto updatedQuiz = quizService.update(id, quiz);
         return new ResponseEntity<>(updatedQuiz, HttpStatus.OK);
     }
@@ -46,6 +47,6 @@ public class QuizController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         quizService.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResponseEntity.noContent().build();
     }
 }

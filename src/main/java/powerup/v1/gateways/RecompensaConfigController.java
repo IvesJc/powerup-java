@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import powerup.v1.dtos.request.RecompensaConfigRequestDto;
+import powerup.v1.dtos.response.RecompensaConfigResponseDto;
 import powerup.v1.entities.RecompensaConfig;
 import powerup.v1.usecases.RecompensaConfigService;
 
@@ -20,7 +21,7 @@ public class RecompensaConfigController {
     private final RecompensaConfigService recompensaConfigService;
 
     @PostMapping
-    public ResponseEntity<RecompensaConfigRequestDto> create(@RequestBody RecompensaConfig recompensaConfig) {
+    public ResponseEntity<RecompensaConfigRequestDto> create(@RequestBody RecompensaConfigResponseDto recompensaConfig) {
         RecompensaConfigRequestDto createdRecompensaConfig = recompensaConfigService.create(recompensaConfig);
         return new ResponseEntity<>(createdRecompensaConfig, HttpStatus.CREATED);
     }
@@ -38,7 +39,7 @@ public class RecompensaConfigController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RecompensaConfigRequestDto> update(@PathVariable Integer id, @RequestBody RecompensaConfig recompensaConfig) {
+    public ResponseEntity<RecompensaConfigRequestDto> update(@PathVariable Integer id, @RequestBody RecompensaConfigResponseDto recompensaConfig) {
         RecompensaConfigRequestDto updatedRecompensaConfig = recompensaConfigService.update(id, recompensaConfig);
         return new ResponseEntity<>(updatedRecompensaConfig, HttpStatus.OK);
     }
@@ -46,6 +47,6 @@ public class RecompensaConfigController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         recompensaConfigService.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResponseEntity.noContent().build();
     }
 }

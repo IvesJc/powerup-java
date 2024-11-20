@@ -3,8 +3,13 @@ package powerup.v1.usecases.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import powerup.v1.dtos.request.EmblemaRequestDto;
+import powerup.v1.dtos.response.EmblemaResponseDto;
 import powerup.v1.entities.Emblema;
+import powerup.v1.entities.EmblemaConfig;
+import powerup.v1.entities.Usuario;
+import powerup.v1.repositories.EmblemaConfigRepository;
 import powerup.v1.repositories.EmblemaRepository;
+import powerup.v1.repositories.UsuarioRepository;
 import powerup.v1.usecases.EmblemaService;
 import powerup.v1.usecases.exception.IdNotFoundException;
 
@@ -15,11 +20,22 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class EmblemaServiceImpl implements EmblemaService {
     private final EmblemaRepository emblemaRepository;
+    private final EmblemaConfigRepository emblemaConfigRepository;
+    private final UsuarioRepository usuarioRepository;
 
     @Override
-    public EmblemaRequestDto create(Emblema emblema) {
-        Emblema savedEntity = emblemaRepository.save(emblema);
-        return mapToDTO(savedEntity);
+    public EmblemaRequestDto create(EmblemaResponseDto emblema) {
+
+        EmblemaConfig emblemaConfig = emblemaConfigRepository.findById(emblema.emblemaConfig()).orElseThrow(() -> new IdNotFoundException("EmblemaConfig not found with id: " + emblema.emblemaConfig()));
+
+        Usuario usuario = usuarioRepository.findById(emblema.usuario()).orElseThrow(() -> new IdNotFoundException("Usuario not found with id: " + emblema.usuario()));
+
+        Emblema newEmblema = Emblema.builder()
+                .emblemaConfigId(emblemaConfig)
+                .usuarioId(usuario).build();
+
+        emblemaRepository.save(newEmblema);
+        return mapToDTO(newEmblema);
     }
 
     @Override
@@ -38,13 +54,20 @@ public class EmblemaServiceImpl implements EmblemaService {
     }
 
     @Override
-    public EmblemaRequestDto update(Integer id, Emblema emblema) {
-        if (!emblemaRepository.existsById(id)) {
-            throw new IdNotFoundException("Emblema not found with id: " + id);
-        }
-        emblema.setId(id);
-        Emblema updatedEntity = emblemaRepository.save(emblema);
-        return mapToDTO(updatedEntity);
+    public EmblemaRequestDto update(Integer id, EmblemaResponseDto emblema) {
+
+        EmblemaConfig emblemaConfig = emblemaConfigRepository.findById(emblema.emblemaConfig()).orElseThrow(() -> new IdNotFoundException("EmblemaConfig not found with id: " + emblema.emblemaConfig()));
+
+        Usuario usuario = usuarioRepository.findById(emblema.usuario()).orElseThrow(() -> new IdNotFoundException("Usuario not found with id: " + emblema.usuario()));
+
+
+        Emblema updateEmblema = emblemaRepository.findById(id).orElseThrow(() -> new IdNotFoundException("Emblema not found with id: " + id));
+
+        updateEmblema.setEmblemaConfigId(emblemaConfig);
+        updateEmblema.setUsuarioId(usuario);
+
+        emblemaRepository.save(updateEmblema);
+        return mapToDTO(updateEmblema);
     }
 
     @Override

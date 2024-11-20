@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import powerup.v1.dtos.request.PerguntaRequestDto;
+import powerup.v1.dtos.response.PerguntaResponseDto;
 import powerup.v1.entities.Pergunta;
 import powerup.v1.usecases.PerguntaService;
 
@@ -20,7 +21,7 @@ public class PerguntaController {
     private final PerguntaService perguntaService;
 
     @PostMapping
-    public ResponseEntity<PerguntaRequestDto> create(@RequestBody Pergunta pergunta) {
+    public ResponseEntity<PerguntaRequestDto> create(@RequestBody PerguntaResponseDto pergunta) {
         PerguntaRequestDto createdPergunta = perguntaService.create(pergunta);
         return new ResponseEntity<>(createdPergunta, HttpStatus.CREATED);
     }
@@ -38,7 +39,7 @@ public class PerguntaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PerguntaRequestDto> update(@PathVariable Integer id, @RequestBody Pergunta pergunta) {
+    public ResponseEntity<PerguntaRequestDto> update(@PathVariable Integer id, @RequestBody PerguntaResponseDto pergunta) {
         PerguntaRequestDto updatedPergunta = perguntaService.update(id, pergunta);
         return new ResponseEntity<>(updatedPergunta, HttpStatus.OK);
     }
@@ -46,6 +47,6 @@ public class PerguntaController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         perguntaService.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResponseEntity.noContent().build();
     }
 }

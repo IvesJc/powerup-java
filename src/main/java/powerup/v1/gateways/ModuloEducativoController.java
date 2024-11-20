@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import powerup.v1.dtos.request.ModuloEducativoRequestDto;
+import powerup.v1.dtos.response.ModuloEducativoResponseDto;
 import powerup.v1.entities.ModuloEducativo;
 import powerup.v1.usecases.ModuloEducativoService;
 
@@ -20,7 +21,7 @@ public class ModuloEducativoController {
     private final ModuloEducativoService moduloEducativoService;
 
     @PostMapping
-    public ResponseEntity<ModuloEducativoRequestDto> create(@RequestBody ModuloEducativo moduloEducativo) {
+    public ResponseEntity<ModuloEducativoRequestDto> create(@RequestBody ModuloEducativoResponseDto moduloEducativo) {
         ModuloEducativoRequestDto createdModuloEducativo = moduloEducativoService.create(moduloEducativo);
         return new ResponseEntity<>(createdModuloEducativo, HttpStatus.CREATED);
     }
@@ -38,7 +39,7 @@ public class ModuloEducativoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ModuloEducativoRequestDto> update(@PathVariable Integer id, @RequestBody ModuloEducativo moduloEducativo) {
+    public ResponseEntity<ModuloEducativoRequestDto> update(@PathVariable Integer id, @RequestBody ModuloEducativoResponseDto moduloEducativo) {
         ModuloEducativoRequestDto updatedModuloEducativo = moduloEducativoService.update(id, moduloEducativo);
         return new ResponseEntity<>(updatedModuloEducativo, HttpStatus.OK);
     }
@@ -46,6 +47,6 @@ public class ModuloEducativoController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         moduloEducativoService.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResponseEntity.noContent().build();
     }
 }

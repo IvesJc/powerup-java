@@ -3,6 +3,7 @@ package powerup.v1.usecases.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import powerup.v1.dtos.request.RankingRequestDto;
+import powerup.v1.dtos.response.RankingResponseDto;
 import powerup.v1.entities.Ranking;
 import powerup.v1.repositories.RankingRepository;
 import powerup.v1.usecases.RankingService;
@@ -19,8 +20,11 @@ public class RankingServiceImpl implements RankingService {
 
 
     @Override
-    public RankingRequestDto create(Ranking ranking) {
-        Ranking savedEntity = rankingRepository.save(ranking);
+    public RankingRequestDto create(RankingResponseDto ranking) {
+        Ranking savedEntity = Ranking.builder()
+                .nome(ranking.nome())
+                .build();
+        rankingRepository.save(savedEntity);
         return mapToDTO(savedEntity);
     }
 
@@ -40,13 +44,13 @@ public class RankingServiceImpl implements RankingService {
     }
 
     @Override
-    public RankingRequestDto update(Integer id, Ranking ranking) {
-        if (!rankingRepository.existsById(id)) {
-            throw new IdNotFoundException("Ranking not found with id: " + id);
-        }
-        ranking.setId(id);
-        Ranking updatedEntity = rankingRepository.save(ranking);
-        return mapToDTO(updatedEntity);
+    public RankingRequestDto update(Integer id, RankingResponseDto ranking) {
+
+        Ranking updateRanking = rankingRepository.findById(id).orElseThrow(() -> new IdNotFoundException("Ranking not found with id: " + id));
+
+        updateRanking.setNome(ranking.nome());
+        rankingRepository.save(updateRanking);
+        return mapToDTO(updateRanking);
     }
 
     @Override

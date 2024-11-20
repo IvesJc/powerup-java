@@ -3,6 +3,7 @@ package powerup.v1.usecases.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import powerup.v1.dtos.request.LinkRequestDto;
+import powerup.v1.dtos.response.LinkResponseDto;
 import powerup.v1.entities.Link;
 import powerup.v1.repositories.LinkRepository;
 import powerup.v1.usecases.LinkService;
@@ -18,8 +19,10 @@ public class LinkServiceImpl implements LinkService {
 
 
     @Override
-    public LinkRequestDto create(Link link) {
-        Link savedEntity = linkRepository.save(link);
+    public LinkRequestDto create(LinkResponseDto link) {
+        Link savedEntity = Link.builder()
+                .url(link.url())
+                .descricao(link.descricao()).build();
         return mapToDTO(savedEntity);
     }
 
@@ -39,13 +42,15 @@ public class LinkServiceImpl implements LinkService {
     }
 
     @Override
-    public LinkRequestDto update(Integer id, Link link) {
-        if (!linkRepository.existsById(id)) {
-            throw new IdNotFoundException("Link not found with id: " + id);
-        }
-        link.setId(id);
-        Link updatedEntity = linkRepository.save(link);
-        return mapToDTO(updatedEntity);
+    public LinkRequestDto update(Integer id, LinkResponseDto link) {
+
+        Link updateLink = linkRepository.findById(id).orElseThrow(() -> new IdNotFoundException("Link not found with id: " + id));
+
+        updateLink.setUrl(link.url());
+        updateLink.setDescricao(link.descricao());
+
+        linkRepository.save(updateLink);
+        return mapToDTO(updateLink);
     }
 
     @Override

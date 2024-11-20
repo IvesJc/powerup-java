@@ -3,6 +3,7 @@ package powerup.v1.usecases.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import powerup.v1.dtos.request.PermissaoRequestDto;
+import powerup.v1.dtos.response.PermissaoResponseDto;
 import powerup.v1.entities.Permissao;
 import powerup.v1.repositories.PermissaoRepository;
 import powerup.v1.usecases.PermissaoService;
@@ -17,8 +18,12 @@ public class PermissaoServiceImpl implements PermissaoService {
     private final PermissaoRepository permissaoRepository;
 
     @Override
-    public PermissaoRequestDto create(Permissao permissao) {
-        Permissao savedEntity = permissaoRepository.save(permissao);
+    public PermissaoRequestDto create(PermissaoResponseDto permissao) {
+
+        Permissao savedEntity = Permissao.builder()
+                .nome(permissao.nome())
+                .descricao(permissao.descricao()).build();
+        permissaoRepository.save(savedEntity);
         return mapToDTO(savedEntity);
     }
 
@@ -38,13 +43,15 @@ public class PermissaoServiceImpl implements PermissaoService {
     }
 
     @Override
-    public PermissaoRequestDto update(Integer id, Permissao permissao) {
-        if (!permissaoRepository.existsById(id)) {
-            throw new IdNotFoundException("Permissao not found with id: " + id);
-        }
-        permissao.setId(id);
-        Permissao updatedEntity = permissaoRepository.save(permissao);
-        return mapToDTO(updatedEntity);
+    public PermissaoRequestDto update(Integer id, PermissaoResponseDto permissao) {
+
+        Permissao updatePermissao = permissaoRepository.findById(id).orElseThrow(() -> new IdNotFoundException("Permissao not found with id: " + id));
+
+        updatePermissao.setNome(permissao.nome());
+        updatePermissao.setDescricao(permissao.descricao());
+
+        permissaoRepository.save(updatePermissao);
+        return mapToDTO(updatePermissao);
     }
 
     @Override

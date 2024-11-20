@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import powerup.v1.dtos.request.MissaoConfigRequestDto;
+import powerup.v1.dtos.response.MissaoConfigResponseDto;
 import powerup.v1.entities.MissaoConfig;
 import powerup.v1.usecases.MissaoConfigService;
 
@@ -19,7 +20,7 @@ public class MissaoConfigController {
 
     private final MissaoConfigService missaoConfigService;
     @PostMapping
-    public ResponseEntity<MissaoConfigRequestDto> create(@RequestBody MissaoConfig missaoConfig) {
+    public ResponseEntity<MissaoConfigRequestDto> create(@RequestBody MissaoConfigResponseDto missaoConfig) {
         MissaoConfigRequestDto createdMissaoConfig = missaoConfigService.create(missaoConfig);
         return new ResponseEntity<>(createdMissaoConfig, HttpStatus.CREATED);
     }
@@ -37,7 +38,7 @@ public class MissaoConfigController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<MissaoConfigRequestDto> update(@PathVariable Integer id, @RequestBody MissaoConfig missaoConfig) {
+    public ResponseEntity<MissaoConfigRequestDto> update(@PathVariable Integer id, @RequestBody MissaoConfigResponseDto missaoConfig) {
         MissaoConfigRequestDto updatedMissaoConfig = missaoConfigService.update(id, missaoConfig);
         return new ResponseEntity<>(updatedMissaoConfig, HttpStatus.OK);
     }
@@ -45,6 +46,6 @@ public class MissaoConfigController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         missaoConfigService.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResponseEntity.noContent().build();
     }
 }
