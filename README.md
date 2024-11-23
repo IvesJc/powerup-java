@@ -60,4 +60,5 @@
 <h2>🚀 Como Rodar a Aplicação  </h2>
 <p>Para rodar a aplicação, basta clonar a aplicação e utilizar os endpoints fornecidos para obter o retorno das consultas na API. <p>A recomendação é utilizar o Swagger para ter uma visualização clara de todos os endpoints e todas as entidades do projeto. Caso não tenha outra aplicação rodando localmente, o endereço é esse: <a href="http://localhost:8080/swagger-ui/index.html">Swagger</a>  <p>Certifique-se de que as dependências e variáveis de ambiente estejam configuradas corretamente.
 
-
+<h2>☁️ Acessando a API</h2>
+<p>Para acessar a API na Azure acesse <a href="http://powerup-dev-001.brazilsouth.cloudapp.azure.com/swagger-ui/index.html">PowerUp</a></p>
